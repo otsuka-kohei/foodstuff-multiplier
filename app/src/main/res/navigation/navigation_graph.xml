@@ -9,18 +9,40 @@
         android:id="@+id/dishListFragment"
         android:name="com.example.foodstuff_multiplier.fragments.DishListFragment"
         android:label="Foodstuff Multiplier"
-        tools:layout="@layout/fragment_dish_list" >
+        tools:layout="@layout/fragment_dish_list">
         <action
             android:id="@+id/action_dishListFragment_to_inputDishNameFragment"
             app:destination="@id/inputDishNameFragment"
             app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_to_left"/>
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
     </fragment>
 
     <fragment
         android:id="@+id/inputDishNameFragment"
         android:name="com.example.foodstuff_multiplier.fragments.InputDishNameFragment"
         android:label="料理名を入力"
-        tools:layout="@layout/fragment_input_dish_name"
-        />
+        tools:layout="@layout/fragment_input_dish_name">
+
+        <action
+            android:id="@+id/action_inputDishNameFragment_to_addFoodstuffFragment"
+            app:destination="@id/addFoodstuffFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addFoodstuffFragment"
+        android:name="com.example.foodstuff_multiplier.fragments.AddFoodstuffFragment"
+        android:label="材料を追加"
+        tools:layout="@layout/fragment_add_foodstuff" >
+
+        <argument
+            android:name="content"
+            app:argType="string" />
+    </fragment>
+
 </navigation>
