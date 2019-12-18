@@ -18,9 +18,7 @@ class MainActivity : AppCompatActivity() {
         val navigationController = findNavController(navigationHostFragment)
         val appBarConfiguration = AppBarConfiguration(navigationController.graph)
         setupActionBarWithNavController(navigationController, appBarConfiguration)
-
-        addDishButton.setOnClickListener {
-            
-        }
     }
+
+    override fun onSupportNavigateUp() = findNavController(navigationHostFragment).navigateUp()
 }

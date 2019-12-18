@@ -8,6 +8,19 @@
     <fragment
         android:id="@+id/dishListFragment"
         android:name="com.example.foodstuff_multiplier.fragments.DishListFragment"
-        android:label="fragment_dish_list"
-        tools:layout="@layout/fragment_dish_list" />
+        android:label="Foodstuff Multiplier"
+        tools:layout="@layout/fragment_dish_list" >
+        <action
+            android:id="@+id/action_dishListFragment_to_inputDishNameFragment"
+            app:destination="@id/inputDishNameFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/inputDishNameFragment"
+        android:name="com.example.foodstuff_multiplier.fragments.InputDishNameFragment"
+        android:label="料理名を入力"
+        tools:layout="@layout/fragment_input_dish_name"
+        />
 </navigation>
