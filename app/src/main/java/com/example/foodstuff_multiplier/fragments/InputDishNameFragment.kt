@@ -24,7 +24,18 @@ class InputDishNameFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         dishNameNextButton.setOnClickListener {
-            findNavController().navigate(R.id.action_inputDishNameFragment_to_addFoodstuffFragment)
+            val dishName = dishNameEditText.text.toString()
+
+            if (dishName.isEmpty()) {
+                dishNameEditText.error = "料理名を入力してください。"
+            } else {
+                val action =
+                    InputDishNameFragmentDirections.actionInputDishNameFragmentToAddFoodstuffFragment(
+                        dishName,
+                        null
+                    )
+                findNavController().navigate(action)
+            }
         }
     }
 }

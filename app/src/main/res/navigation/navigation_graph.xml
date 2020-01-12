@@ -41,8 +41,36 @@
         tools:layout="@layout/fragment_add_foodstuff" >
 
         <argument
-            android:name="content"
+            android:name="dishName"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="dish"
+            app:argType="com.example.foodstuff_multiplier.Dish"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <action
+            android:id="@+id/action_addFoodstuffFragment_to_selectMainFoodstuffFragment"
+            app:destination="@id/selectMainFoodstuffFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/selectMainFoodstuffFragment"
+        android:name="com.example.foodstuff_multiplier.fragments.SelectMainFoodstuffFragment"
+        android:label="fragment_select_main_foodstuff"
+        tools:layout="@layout/fragment_select_main_foodstuff" >
+        <argument
+            android:name="dishName"
             app:argType="string" />
+        <argument
+            android:name="foodstuffList"
+            app:argType="com.example.foodstuff_multiplier.Dish[]" />
     </fragment>
 
 </navigation>

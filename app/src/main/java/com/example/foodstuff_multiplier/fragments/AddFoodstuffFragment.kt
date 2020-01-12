@@ -1,14 +1,13 @@
 package com.example.foodstuff_multiplier.fragments
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import com.example.foodstuff_multiplier.AddFoodstuffListAdapter
-import com.example.foodstuff_multiplier.FoodstuffItem
+import com.example.foodstuff_multiplier.Foodstuff
 
 import com.example.foodstuff_multiplier.R
 import kotlinx.android.synthetic.main.fragment_add_foodstuff.*
@@ -16,6 +15,8 @@ import kotlinx.android.synthetic.main.fragment_add_foodstuff.*
 class AddFoodstuffFragment : Fragment() {
 
     private lateinit var addFoodstuffListAdapter: AddFoodstuffListAdapter
+
+    private val args: AddFoodstuffFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,8 +29,11 @@ class AddFoodstuffFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val emptyFoodstuffItem = FoodstuffItem("", 0f, "")
-        val defaultFoodstuffList = listOf(emptyFoodstuffItem, emptyFoodstuffItem)
+        val emptyFoodstuffItem = Foodstuff("", 0f, "")
+
+        val defaultFoodstuffList: List<Foodstuff> =
+            args.dish?.foodstuffList ?: listOf(emptyFoodstuffItem, emptyFoodstuffItem)
+
         addFoodstuffListAdapter = AddFoodstuffListAdapter(activity!!, defaultFoodstuffList) {
             addNewFoodstuffItem()
         }
@@ -37,10 +41,10 @@ class AddFoodstuffFragment : Fragment() {
     }
 
     fun addNewFoodstuffItem() {
-        val currentFoodstuffList: MutableList<FoodstuffItem> =
+        val currentFoodstuffList: MutableList<Foodstuff> =
             addFoodstuffListAdapter.getFoodStufItemList()
 
-        val emptyFoodstuffItem = FoodstuffItem("", 0f, "")
+        val emptyFoodstuffItem = Foodstuff("", 0f, "")
         currentFoodstuffList.add(emptyFoodstuffItem)
         addFoodstuffListAdapter =
             AddFoodstuffListAdapter(activity!!, currentFoodstuffList) {

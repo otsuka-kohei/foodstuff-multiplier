@@ -8,11 +8,10 @@ import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import java.lang.Exception
 
 class AddFoodstuffListAdapter(
     val activity: Activity,
-    val foodstuffList: List<FoodstuffItem>,
+    val foodstuffList: List<Foodstuff>,
     val onClickAddFoddstuff: () -> Unit
 ) :
     BaseAdapter() {
@@ -67,8 +66,8 @@ class AddFoodstuffListAdapter(
         return foodstuffList.size
     }
 
-    fun getFoodStufItemList(): MutableList<FoodstuffItem> {
-        val list = mutableListOf<FoodstuffItem>()
+    fun getFoodStufItemList(): MutableList<Foodstuff> {
+        val list = mutableListOf<Foodstuff>()
 
         for (view in viewList) {
             val nameEditText: EditText = view.findViewById(R.id.foodstuffNameEditText)
@@ -85,7 +84,7 @@ class AddFoodstuffListAdapter(
             val unitEditText: EditText = view.findViewById(R.id.unitEditText)
             val unit = unitEditText.text.toString()
 
-            val foodstuffItem = FoodstuffItem(name, amount, unit)
+            val foodstuffItem = Foodstuff(name, amount, unit)
             list.add(foodstuffItem)
         }
 
