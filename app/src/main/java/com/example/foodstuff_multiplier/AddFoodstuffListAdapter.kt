@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.EditText
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import java.lang.Exception
 
 class AddFoodstuffListAdapter(
     val activity: Activity,
@@ -27,10 +30,25 @@ class AddFoodstuffListAdapter(
         foodstuffNameEditText.setText(foodstuffList[position].name)
 
         val amountEditText: EditText = view.findViewById(R.id.amountEditText)
-        amountEditText.setText(foodstuffList[position].amount.toString())
+        if (foodstuffList[position].amount > 0f) {
+            amountEditText.setText(foodstuffList[position].amount.toString())
+        }
 
         val unitEditText: EditText = view.findViewById(R.id.unitEditText)
         unitEditText.setText(foodstuffList[position].unit)
+
+        val addNewStuffTextView: TextView = view.findViewById(R.id.addNewStuffTextView)
+        addNewStuffTextView.setOnClickListener {
+            onClickAddFoddstuff()
+        }
+
+        if (position == foodstuffList.size - 1) {
+            val inputStuffLayout: ConstraintLayout = view.findViewById(R.id.inputStuffLayout)
+            inputStuffLayout.visibility = View.GONE
+        } else {
+            val addNewStuffLayout: ConstraintLayout = view.findViewById(R.id.addNewStuffLayout)
+            addNewStuffLayout.visibility = View.GONE
+        }
 
         viewList.add(view)
 
@@ -49,15 +67,20 @@ class AddFoodstuffListAdapter(
         return foodstuffList.size
     }
 
-    fun getFoodStufItemList(): List<FoodstuffItem> {
+    fun getFoodStufItemList(): MutableList<FoodstuffItem> {
         val list = mutableListOf<FoodstuffItem>()
 
         for (view in viewList) {
             val nameEditText: EditText = view.findViewById(R.id.foodstuffNameEditText)
             val name = nameEditText.text.toString()
 
-            val amountEditText: EditText = view.findViewById(R.id.amountEditText)
-            val amount = amountEditText.text.toString().toFloat()
+            var amount: Float
+            try {
+                val amountEditText: EditText = view.findViewById(R.id.amountEditText)
+                amount = amountEditText.text.toString().toFloat()
+            } catch (e: NumberFormatException) {
+                amount = 0f
+            }
 
             val unitEditText: EditText = view.findViewById(R.id.unitEditText)
             val unit = unitEditText.text.toString()
