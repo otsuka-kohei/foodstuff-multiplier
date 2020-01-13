@@ -1,16 +1,18 @@
 package com.example.foodstuff_multiplier.fragments
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.foodstuff_multiplier.Dish
+import com.example.foodstuff_multiplier.FmSQLiteOpenHelper
 import com.example.foodstuff_multiplier.Foodstuff
 
 import com.example.foodstuff_multiplier.R
+import com.example.foodstuff_multiplier.listadapter.DishListAdapter
 import kotlinx.android.synthetic.main.fragment_dish_list.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.list
@@ -35,6 +37,22 @@ class DishListFragment : Fragment() {
         }
 
         clearTempFoodstuffList()
+
+
+        val dataList: List<Pair<Int, String>> = FmSQLiteOpenHelper.readAllData()
+        val dishList = dataList.map {
+            Json.parse(Dish.serializer(), it.second)
+        }
+
+        if (dishList.isNotEmpty()) {
+            dishListView.visibility = View.VISIBLE
+            noItem.visibility = View.GONE
+            val dishListAdapter = DishListAdapter(activity!!, dishList)
+            dishListView.adapter = dishListAdapter
+        }else{
+            dishListView.visibility = View.GONE
+            noItem.visibility = View.VISIBLE
+        }
     }
 
     private fun clearTempFoodstuffList() {
