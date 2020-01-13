@@ -63,14 +63,14 @@
     <fragment
         android:id="@+id/selectMainFoodstuffFragment"
         android:name="com.example.foodstuff_multiplier.fragments.SelectMainFoodstuffFragment"
-        android:label="fragment_select_main_foodstuff"
+        android:label="代表的な材料を選択"
         tools:layout="@layout/fragment_select_main_foodstuff" >
         <argument
             android:name="dishName"
             app:argType="string" />
         <argument
             android:name="foodstuffList"
-            app:argType="com.example.foodstuff_multiplier.Dish[]" />
+            app:argType="com.example.foodstuff_multiplier.Foodstuff[]" />
     </fragment>
 
 </navigation>
