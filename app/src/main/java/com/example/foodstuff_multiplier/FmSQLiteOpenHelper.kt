@@ -16,8 +16,8 @@ class FmSQLiteOpenHelper(val context: Context) : SQLiteOpenHelper(
         private val DATABASE_VERSION = 1
 
         // データーベース情報を変数に格納
-        private val DATABASE_NAME = "json_data.db"
-        private val TABLE_NAME = "json_data_db"
+        private val DATABASE_NAME = "json_serialized.db"
+        private val TABLE_NAME = "json_serialized_db"
         private val ID = "id"
         private val COLUMN_NAME_JSON = "json_data"
 
@@ -31,6 +31,11 @@ class FmSQLiteOpenHelper(val context: Context) : SQLiteOpenHelper(
             }
         }
 
+        fun teardown() {
+            db.close()
+            canUse = false
+        }
+
         private var canUse = false
         lateinit var db: SQLiteDatabase
 
@@ -41,12 +46,23 @@ class FmSQLiteOpenHelper(val context: Context) : SQLiteOpenHelper(
 
             val values = ContentValues()
             values.put(COLUMN_NAME_JSON, jsonString)
-            
+
             db.insert(TABLE_NAME, null, values)
         }
 
-        fun readAllData(): List<Triple<Int, String, String>> {
-            val list = ArrayList<Triple<Int, String, String>>()
+        fun updateData(id: Int, jsonString: String) {
+            if (!canUse) {
+                return
+            }
+
+            val values = ContentValues()
+            values.put(COLUMN_NAME_JSON, jsonString)
+
+            db.update(TABLE_NAME, values, "${ID} = ?", arrayOf(id.toString()))
+        }
+
+        fun readAllData(): List<Pair<Int, String>> {
+            val list = mutableListOf<Pair<Int, String>>()
 
             if (!canUse) {
                 return list
@@ -67,10 +83,9 @@ class FmSQLiteOpenHelper(val context: Context) : SQLiteOpenHelper(
             Log.d("MemoDB", "cursor count : ${cursor.count}")
 
             for (i in 0 until cursor.count) {
-                val memo: String = cursor.getString(0)
-                val imageBase64: String = cursor.getString(1)
+                val jsonString: String = cursor.getString(0)
 
-                list.add(Triple(i, memo, imageBase64))
+                list.add(Pair(i, jsonString))
 
                 cursor.moveToNext()
             }
