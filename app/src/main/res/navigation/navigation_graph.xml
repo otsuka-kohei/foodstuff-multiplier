@@ -93,7 +93,7 @@
     <fragment
         android:id="@+id/confirmDishFragment"
         android:name="com.example.foodstuff_multiplier.fragments.ConfirmDishFragment"
-        android:label=""
+        android:label="確認"
         tools:layout="@layout/fragment_confirm_dish" >
         <argument
             android:name="dish"

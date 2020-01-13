@@ -34,6 +34,7 @@ class ConfirmDishFragment : Fragment() {
         val foodstuffListAdapter = FoodstuffListAdapter(activity!!, dish.foodstuffList) {
 
         }
+        foodstuffListView.adapter = foodstuffListAdapter
     }
 
 
