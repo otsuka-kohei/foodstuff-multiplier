@@ -32,7 +32,7 @@ class DishListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         addDishButton.setOnClickListener {
-            val action = DishListFragmentDirections.actionDishListFragmentToInputDishNameFragment(0)
+            val action = DishListFragmentDirections.actionDishListFragmentToInputDishNameFragment(-1)
             findNavController().navigate(action)
         }
 

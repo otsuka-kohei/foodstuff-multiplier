@@ -19,6 +19,7 @@ class FmSQLiteOpenHelper(val context: Context) : SQLiteOpenHelper(
         private val DATABASE_NAME = "json_serialized.db"
         private val TABLE_NAME = "json_serialized_db"
         private val ID = "id"
+        private val COLUMN_NAME_DATA_ID = "data_id"
         private val COLUMN_NAME_JSON = "json_data"
 
         lateinit var memoSQLiteOpenHelper: FmSQLiteOpenHelper
@@ -39,18 +40,19 @@ class FmSQLiteOpenHelper(val context: Context) : SQLiteOpenHelper(
         private var canUse = false
         lateinit var db: SQLiteDatabase
 
-        fun appendData(jsonString: String) {
+        fun appendData(dataId: Int, jsonString: String) {
             if (!canUse) {
                 return
             }
 
             val values = ContentValues()
+            values.put(COLUMN_NAME_DATA_ID, dataId)
             values.put(COLUMN_NAME_JSON, jsonString)
 
             db.insert(TABLE_NAME, null, values)
         }
 
-        fun updateData(id: Int, jsonString: String) {
+        fun updateData(dataId: Int, jsonString: String) {
             if (!canUse) {
                 return
             }
@@ -58,7 +60,7 @@ class FmSQLiteOpenHelper(val context: Context) : SQLiteOpenHelper(
             val values = ContentValues()
             values.put(COLUMN_NAME_JSON, jsonString)
 
-            db.update(TABLE_NAME, values, "${ID} = ?", arrayOf(id.toString()))
+            db.update(TABLE_NAME, values, "${COLUMN_NAME_DATA_ID} = ?", arrayOf(dataId.toString()))
         }
 
         fun readAllData(): List<Pair<Int, String>> {
@@ -70,7 +72,7 @@ class FmSQLiteOpenHelper(val context: Context) : SQLiteOpenHelper(
 
             val cursor = db.query(
                 TABLE_NAME,
-                arrayOf(COLUMN_NAME_JSON),
+                arrayOf(COLUMN_NAME_DATA_ID, COLUMN_NAME_JSON),
                 null,
                 null,
                 null,
@@ -83,24 +85,58 @@ class FmSQLiteOpenHelper(val context: Context) : SQLiteOpenHelper(
             Log.d("MemoDB", "cursor count : ${cursor.count}")
 
             for (i in 0 until cursor.count) {
-                val jsonString: String = cursor.getString(0)
+                val dataId: Int = cursor.getInt(0)
+                val jsonString: String = cursor.getString(1)
 
-                list.add(Pair(i, jsonString))
+                list.add(Pair(dataId, jsonString))
 
                 cursor.moveToNext()
             }
 
             cursor.close()
 
-            return list
+            return list.toList()
+        }
+
+        fun readDataIdList(): List<Int> {
+            val list = mutableListOf<Int>()
+
+            if (!canUse) {
+                return list
+            }
+
+            val cursor = db.query(
+                TABLE_NAME,
+                arrayOf(COLUMN_NAME_DATA_ID),
+                null,
+                null,
+                null,
+                null,
+                null
+            )
+
+            cursor.moveToFirst()
+
+            Log.d("MemoDB", "cursor count : ${cursor.count}")
+
+            for (i in 0 until cursor.count) {
+                val dataId: Int = cursor.getInt(0)
+
+                list.add(dataId)
+
+                cursor.moveToNext()
+            }
+
+            cursor.close()
+
+            return list.toList()
         }
     }
 
     private val SQL_CREATE_ENTRIES =
-        "CREATE TABLE ${TABLE_NAME} (${ID} INTEGER PRIMARY KEY,${COLUMN_NAME_JSON} TEXT)"
+        "CREATE TABLE ${TABLE_NAME} (${ID} INTEGER PRIMARY KEY,${COLUMN_NAME_DATA_ID} INTEGER,${COLUMN_NAME_JSON} TEXT)"
 
     private val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS $TABLE_NAME"
-
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(SQL_CREATE_ENTRIES)

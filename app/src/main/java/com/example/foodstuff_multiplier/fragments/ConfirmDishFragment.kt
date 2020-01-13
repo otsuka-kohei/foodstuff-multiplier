@@ -6,11 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.foodstuff_multiplier.Dish
+import com.example.foodstuff_multiplier.FmSQLiteOpenHelper
 
 import com.example.foodstuff_multiplier.R
 import com.example.foodstuff_multiplier.listadapter.FoodstuffListAdapter
 import kotlinx.android.synthetic.main.fragment_confirm_dish.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.stringify
 
 class ConfirmDishFragment : Fragment() {
 
@@ -35,6 +41,11 @@ class ConfirmDishFragment : Fragment() {
 
         }
         foodstuffListView.adapter = foodstuffListAdapter
+
+        confirmButton.setOnClickListener {
+            FmSQLiteOpenHelper.appendData(dish.id, Json.stringify(Dish.serializer(), dish))
+            findNavController().navigate(R.id.action_confirmDishFragment_to_dishListFragment)
+        }
     }
 
 

@@ -34,7 +34,8 @@
             app:popExitAnim="@anim/slide_to_right" />
         <argument
             android:name="id"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 
     <fragment
@@ -98,6 +99,13 @@
         <argument
             android:name="dish"
             app:argType="com.example.foodstuff_multiplier.Dish" />
+        <action
+            android:id="@+id/action_confirmDishFragment_to_dishListFragment"
+            app:destination="@id/dishListFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
     </fragment>
 
 </navigation>

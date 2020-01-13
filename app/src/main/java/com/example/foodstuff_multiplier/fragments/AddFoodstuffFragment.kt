@@ -39,7 +39,7 @@ class AddFoodstuffFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        if (args.id != -1) {
+        if (args.id == -1) {
             addNewDish = true
         }
 

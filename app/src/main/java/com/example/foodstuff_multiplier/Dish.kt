@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 data class Dish(
-    val id: Int,
+    val id: Int = -1,
     val name: String,
     val mainFoodstuffIndex: Int,
     val foodstuffList: List<Foodstuff>
