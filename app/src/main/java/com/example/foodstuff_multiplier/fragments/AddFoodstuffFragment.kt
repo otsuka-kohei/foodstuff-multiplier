@@ -2,20 +2,23 @@ package com.example.foodstuff_multiplier.fragments
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.foodstuff_multiplier.AddFoodstuffListAdapter
+import com.example.foodstuff_multiplier.listadapter.AddFoodstuffListAdapter
 import com.example.foodstuff_multiplier.Foodstuff
 
 import com.example.foodstuff_multiplier.R
 import kotlinx.android.synthetic.main.fragment_add_foodstuff.*
+import kotlinx.serialization.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonDecodingException
 
 class AddFoodstuffFragment : Fragment() {
 
@@ -36,54 +39,109 @@ class AddFoodstuffFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val emptyFoodstuffItem = Foodstuff("", 0f, "")
-
-        if (args.dishName != null) {
+        if (args.id != -1) {
             addNewDish = true
         }
 
         addFoodstuffNextButton.setOnClickListener {
-            val foodstuffList: MutableList<Foodstuff> =
+            Log.d("AddFoodStuffState", addNewDish.toString())
+
+            val foodstuffList: List<Foodstuff> =
                 addFoodstuffListAdapter.getFoodStufItemList()
             val validFoodStuffList: List<Foodstuff> =
                 foodstuffList.filter { it.name.isNotEmpty() && it.unit.isNotEmpty() }
 
             if (validFoodStuffList.isNotEmpty()) {
-                val dishName = args.dishName ?: args.dish!!.name
-                if (dishName != null) {
-                    val action =
-                        AddFoodstuffFragmentDirections.actionAddFoodstuffFragmentToSelectMainFoodstuffFragment(
-                            dishName, validFoodStuffList.toTypedArray()
-                        )
-                    findNavController().navigate(action)
-                }
+                val dishName = if (addNewDish) args.dishName!! else args.dish!!.name
+                val id = if (addNewDish) args.id else args.dish!!.id
+                val action =
+                    AddFoodstuffFragmentDirections.actionAddFoodstuffFragmentToSelectMainFoodstuffFragment(
+                        dishName, validFoodStuffList.toTypedArray(), id
+                    )
+                findNavController().navigate(action)
             } else {
                 val dialog = AddFoodstuffValidationDialog(activity!!)
                 dialog.show(fragmentManager!!, null)
             }
         }
 
-        val defaultFoodstuffList: List<Foodstuff> =
-            args.dish?.foodstuffList ?: listOf(emptyFoodstuffItem, emptyFoodstuffItem)
+        val emptyFoodstuffItem = Foodstuff("", 0f, "")
 
-        addFoodstuffListAdapter = AddFoodstuffListAdapter(activity!!, defaultFoodstuffList) {
-            addNewFoodstuffItem()
-        }
+        val defaultFoodstuffList = loadTempFoodstuffList() ?: args.dish?.foodstuffList ?: listOf(
+            emptyFoodstuffItem,
+            emptyFoodstuffItem
+        )
+
+        addFoodstuffListAdapter =
+            AddFoodstuffListAdapter(
+                activity!!,
+                defaultFoodstuffList
+            ) {
+                addNewFoodstuffItem()
+            }
         addFoodStuffListView.adapter = addFoodstuffListAdapter
     }
 
     fun addNewFoodstuffItem() {
         val currentFoodstuffList: MutableList<Foodstuff> =
-            addFoodstuffListAdapter.getFoodStufItemList()
+            addFoodstuffListAdapter.getFoodStufItemList().toMutableList()
 
         val emptyFoodstuffItem = Foodstuff("", 0f, "")
         currentFoodstuffList.add(emptyFoodstuffItem)
         addFoodstuffListAdapter =
-            AddFoodstuffListAdapter(activity!!, currentFoodstuffList) {
+            AddFoodstuffListAdapter(
+                activity!!,
+                currentFoodstuffList
+            ) {
                 addNewFoodstuffItem()
             }
         addFoodStuffListView.adapter = addFoodstuffListAdapter
         addFoodStuffListView.setSelection(currentFoodstuffList.size + 1)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        Log.d("defaultFoodstuffList", "save state")
+        val foodstuffList: List<Foodstuff> =
+            addFoodstuffListAdapter.getFoodStufItemList()
+        saveTempFoodstuffList(foodstuffList)
+    }
+
+    private fun saveTempFoodstuffList(foodstuffList: List<Foodstuff>) {
+
+        val jsonData: String = Json.stringify(Foodstuff.serializer().list, foodstuffList)
+
+        activity?.let {
+            val preference = it.applicationContext.getSharedPreferences(
+                "temp_foodstuff_list",
+                Context.MODE_PRIVATE
+            )
+            val editor = preference.edit()
+            editor.putString("temp_foodstuff_list", jsonData)
+            editor.apply()
+        }
+    }
+
+    private fun loadTempFoodstuffList(): List<Foodstuff>? {
+        activity?.let {
+            val preference = it.applicationContext.getSharedPreferences(
+                "temp_foodstuff_list",
+                Context.MODE_PRIVATE
+            )
+            val jsonData: String? = preference.getString("temp_foodstuff_list", "")
+            jsonData?.let {
+                var foodstuffList: List<Foodstuff>?
+                try {
+                    foodstuffList = Json.parse(Foodstuff.serializer().list, jsonData)
+                } catch (e: JsonDecodingException) {
+                    foodstuffList = null
+                }
+                return foodstuffList
+            }
+        }
+
+        return null
     }
 }
 

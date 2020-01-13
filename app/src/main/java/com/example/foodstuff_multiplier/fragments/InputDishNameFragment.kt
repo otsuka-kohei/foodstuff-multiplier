@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 
 import com.example.foodstuff_multiplier.R
 import kotlinx.android.synthetic.main.fragment_input_dish_name.*
 
 class InputDishNameFragment : Fragment() {
+
+    private val args: InputDishNameFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +35,8 @@ class InputDishNameFragment : Fragment() {
                 val action =
                     InputDishNameFragmentDirections.actionInputDishNameFragmentToAddFoodstuffFragment(
                         dishName,
-                        null
+                        null,
+                        args.id
                     )
                 findNavController().navigate(action)
             }

@@ -32,13 +32,16 @@
             app:exitAnim="@anim/slide_to_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_to_right" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
 
     <fragment
         android:id="@+id/addFoodstuffFragment"
         android:name="com.example.foodstuff_multiplier.fragments.AddFoodstuffFragment"
         android:label="材料を追加"
-        tools:layout="@layout/fragment_add_foodstuff" >
+        tools:layout="@layout/fragment_add_foodstuff">
 
         <argument
             android:name="dishName"
@@ -46,9 +49,9 @@
             app:nullable="true" />
         <argument
             android:name="dish"
+            android:defaultValue="@null"
             app:argType="com.example.foodstuff_multiplier.Dish"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
 
         <action
             android:id="@+id/action_addFoodstuffFragment_to_selectMainFoodstuffFragment"
@@ -57,6 +60,10 @@
             app:exitAnim="@anim/slide_to_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_to_right" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 
 
@@ -64,13 +71,33 @@
         android:id="@+id/selectMainFoodstuffFragment"
         android:name="com.example.foodstuff_multiplier.fragments.SelectMainFoodstuffFragment"
         android:label="代表的な材料を選択"
-        tools:layout="@layout/fragment_select_main_foodstuff" >
+        tools:layout="@layout/fragment_select_main_foodstuff">
         <argument
             android:name="dishName"
             app:argType="string" />
         <argument
             android:name="foodstuffList"
             app:argType="com.example.foodstuff_multiplier.Foodstuff[]" />
+        <action
+            android:id="@+id/action_selectMainFoodstuffFragment_to_confirmDishFragment"
+            app:destination="@id/confirmDishFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/confirmDishFragment"
+        android:name="com.example.foodstuff_multiplier.fragments.ConfirmDishFragment"
+        android:label=""
+        tools:layout="@layout/fragment_confirm_dish" >
+        <argument
+            android:name="dish"
+            app:argType="com.example.foodstuff_multiplier.Dish" />
     </fragment>
 
 </navigation>
