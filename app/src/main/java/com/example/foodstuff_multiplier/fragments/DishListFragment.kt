@@ -2,6 +2,7 @@ package com.example.foodstuff_multiplier.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,17 +28,20 @@ class DishListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_dish_list, container, false)
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         addDishButton.setOnClickListener {
-            val action = DishListFragmentDirections.actionDishListFragmentToInputDishNameFragment(-1)
-            findNavController().navigate(action)
+            val newId = getNewDishId()
+            if (newId >= 0) {
+                Log.d("DishListFragment", "new ID : ${newId}")
+                val action =
+                    DishListFragmentDirections.actionDishListFragmentToInputDishNameFragment(newId)
+                findNavController().navigate(action)
+            }
         }
 
         clearTempFoodstuffList()
-
 
         val dataList: List<Pair<Int, String>> = FmSQLiteOpenHelper.readAllData()
         val dishList = dataList.map {
@@ -49,10 +53,26 @@ class DishListFragment : Fragment() {
             noItem.visibility = View.GONE
             val dishListAdapter = DishListAdapter(activity!!, dishList)
             dishListView.adapter = dishListAdapter
-        }else{
+        } else {
             dishListView.visibility = View.GONE
             noItem.visibility = View.VISIBLE
         }
+
+        dishListView.setOnItemClickListener { adapterView, view, position, l ->
+            val action =
+                DishListFragmentDirections.actionDishListFragmentToInputAmountFragment(dishList[position])
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun getNewDishId(): Int {
+        val idList = FmSQLiteOpenHelper.readDataIdList()
+        for (newId in 0..Int.MAX_VALUE) {
+            if (!idList.contains(newId)) {
+                return newId
+            }
+        }
+        return -1
     }
 
     private fun clearTempFoodstuffList() {
