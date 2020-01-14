@@ -134,7 +134,7 @@
     <fragment
         android:id="@+id/scaleResultFragment"
         android:name="com.example.foodstuff_multiplier.fragments.ScaleResultFragment"
-        android:label="fragment_scale_result"
+        android:label="計算結果"
         tools:layout="@layout/fragment_scale_result" >
         <argument
             android:name="dish"
