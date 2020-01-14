@@ -122,6 +122,33 @@
         <argument
             android:name="dish"
             app:argType="com.example.foodstuff_multiplier.Dish" />
+        <action
+            android:id="@+id/action_inputAmountFragment_to_scaleResultFragment"
+            app:destination="@id/scaleResultFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/scaleResultFragment"
+        android:name="com.example.foodstuff_multiplier.fragments.ScaleResultFragment"
+        android:label="fragment_scale_result"
+        tools:layout="@layout/fragment_scale_result" >
+        <argument
+            android:name="dish"
+            app:argType="com.example.foodstuff_multiplier.Dish" />
+        <argument
+            android:name="mainFoodstuffAmount"
+            app:argType="float" />
+        <action
+            android:id="@+id/action_scaleResultFragment_to_dishListFragment"
+            app:destination="@id/dishListFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"/>
     </fragment>
 
 </navigation>

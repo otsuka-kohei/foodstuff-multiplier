@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 import com.example.foodstuff_multiplier.R
 import kotlinx.android.synthetic.main.fragment_input_amount.*
-import kotlinx.android.synthetic.main.item_add_foodstuff_list.*
 
 /**
  * A simple [Fragment] subclass.
@@ -36,7 +36,20 @@ class InputAmountFragment : Fragment() {
         unitTextView.text = dish.foodstuffList[dish.mainFoodstuffIndex].unit
 
         amountNextButton.setOnClickListener {
+            var amount: Float
 
+            try {
+                amount = scaleAmountEditText.text.toString().toFloat()
+            } catch (e: NumberFormatException) {
+                amount = 0f
+            }
+
+            val action =
+                InputAmountFragmentDirections.actionInputAmountFragmentToScaleResultFragment(
+                    dish,
+                    amount
+                )
+            findNavController().navigate(action)
         }
     }
 

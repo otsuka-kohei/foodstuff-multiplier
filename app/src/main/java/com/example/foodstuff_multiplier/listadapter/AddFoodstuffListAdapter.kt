@@ -29,7 +29,7 @@ class AddFoodstuffListAdapter(
         val foodstuffNameEditText: EditText = view.findViewById(R.id.foodstuffNameEditText)
         foodstuffNameEditText.setText(foodstuffList[position].name)
 
-        val amountEditText: EditText = view.findViewById(R.id.amountEditText)
+        val amountEditText: EditText = view.findViewById(R.id.scaleAmountEditText)
         if (foodstuffList[position].amount > 0f) {
             amountEditText.setText(foodstuffList[position].amount.toString())
         }
