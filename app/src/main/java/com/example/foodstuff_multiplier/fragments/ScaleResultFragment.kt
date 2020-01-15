@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 
 import com.example.foodstuff_multiplier.R
 import com.example.foodstuff_multiplier.listadapter.ScaleResultListAdapter
+import com.example.foodstuff_multiplier.toSimpleString
 import kotlinx.android.synthetic.main.fragment_scale_result.*
 
 class ScaleResultFragment : Fragment() {
@@ -35,7 +36,7 @@ class ScaleResultFragment : Fragment() {
         val dish = args.dish
         val scale = args.mainFoodstuffAmount / dish.foodstuffList[dish.mainFoodstuffIndex].amount
         val results: List<Pair<String, String>> = dish.foodstuffList.map {
-            val amount = "${it.amount * scale} ${it.unit}"
+            val amount = "${(it.amount * scale).toSimpleString()} ${it.unit}"
             Pair(it.name, amount)
         }
         val scaleResultListAdapter = ScaleResultListAdapter(activity!!, results)

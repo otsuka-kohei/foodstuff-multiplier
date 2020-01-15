@@ -3,7 +3,6 @@ package com.example.foodstuff_multiplier.fragments
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -14,13 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.foodstuff_multiplier.Dish
 import com.example.foodstuff_multiplier.FmSQLiteOpenHelper
-import com.example.foodstuff_multiplier.Foodstuff
 
 import com.example.foodstuff_multiplier.R
 import com.example.foodstuff_multiplier.listadapter.DishListAdapter
 import kotlinx.android.synthetic.main.fragment_dish_list.*
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.list
 
 class DishListFragment : Fragment() {
 
@@ -122,8 +119,8 @@ class DishListFragment : Fragment() {
             findNavController().navigate(action)
 
         } else if (item.itemId == R.id.dish_list_delete) {
-            val dishId = dishList[position].id
-            val dialog = ConfirmDeleteDishDialog(activity!!, dishId) {
+            val dish = dishList[position]
+            val dialog = ConfirmDeleteDishDialog(activity!!, dish) {
                 setDishDataToListView()
             }
             dialog.show(fragmentManager!!, null)
@@ -135,17 +132,17 @@ class DishListFragment : Fragment() {
 
 class ConfirmDeleteDishDialog(
     val activity: Activity,
-    val deleteDishDataId: Int,
+    val dish: Dish,
     val afterDeleteFun: () -> Unit
 ) :
     DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
-        builder.setMessage("少なくとも1つ以上の材料名と単位を入力してください。")
-        builder.setPositiveButton("はい", DialogInterface.OnClickListener { dialog, id ->
-            FmSQLiteOpenHelper.deleteData(deleteDishDataId)
+        builder.setMessage("項目「${dish.name}」を削除してもよろしいですか？")
+        builder.setPositiveButton("はい") { dialog, id ->
+            FmSQLiteOpenHelper.deleteData(dish.id)
             afterDeleteFun()
-        })
+        }
         builder.setNegativeButton("いいえ", null)
         return builder.create()
     }

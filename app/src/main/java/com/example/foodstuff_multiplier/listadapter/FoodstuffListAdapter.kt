@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.foodstuff_multiplier.Foodstuff
 import com.example.foodstuff_multiplier.R
+import com.example.foodstuff_multiplier.toSimpleString
 
 class FoodstuffListAdapter(
     val activity: Activity,
@@ -30,7 +31,8 @@ class FoodstuffListAdapter(
         val amountTextView: TextView =
             view.findViewById(R.id.amountTextView)
         val amount = foodstuffList[position].amount
-        amountTextView.text = if (amount > 0f) foodstuffList[position].amount.toString() else ""
+        amountTextView.text =
+            if (amount > 0f) foodstuffList[position].amount.toSimpleString() else ""
 
         val unitTextView: TextView =
             view.findViewById(R.id.unitTextView)

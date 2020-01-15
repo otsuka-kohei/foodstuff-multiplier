@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.foodstuff_multiplier.Foodstuff
 import com.example.foodstuff_multiplier.R
+import com.example.foodstuff_multiplier.toSimpleString
 
 class InputFoodstuffListAdapter(
     val activity: Activity,
@@ -31,7 +32,7 @@ class InputFoodstuffListAdapter(
 
         val amountEditText: EditText = view.findViewById(R.id.scaleAmountEditText)
         if (foodstuffList[position].amount > 0f) {
-            amountEditText.setText(foodstuffList[position].amount.toString())
+            amountEditText.setText(foodstuffList[position].amount.toSimpleString())
         }
 
         val unitEditText: EditText = view.findViewById(R.id.unitEditText)
