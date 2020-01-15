@@ -33,8 +33,8 @@
         tools:layout="@layout/fragment_input_dish_name">
 
         <action
-            android:id="@+id/action_inputDishNameFragment_to_addFoodstuffFragment"
-            app:destination="@id/addFoodstuffFragment"
+            android:id="@+id/action_inputDishNameFragment_to_inputFoodstuffFragment"
+            app:destination="@id/inputFoodstuffFragment"
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"
             app:popEnterAnim="@anim/slide_from_left"
@@ -51,10 +51,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/addFoodstuffFragment"
-        android:name="com.example.foodstuff_multiplier.fragments.AddFoodstuffFragment"
-        android:label="材料を追加"
-        tools:layout="@layout/fragment_add_foodstuff">
+        android:id="@+id/inputFoodstuffFragment"
+        android:name="com.example.foodstuff_multiplier.fragments.InputFoodstuffFragment"
+        android:label="材料の情報を入力"
+        tools:layout="@layout/fragment_input_foodstuff">
 
         <argument
             android:name="dishName"
@@ -66,7 +66,7 @@
             app:nullable="true" />
 
         <action
-            android:id="@+id/action_addFoodstuffFragment_to_selectMainFoodstuffFragment"
+            android:id="@+id/action_inputFoodstuffFragment_to_selectMainFoodstuffFragment"
             app:destination="@id/selectMainFoodstuffFragment"
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"

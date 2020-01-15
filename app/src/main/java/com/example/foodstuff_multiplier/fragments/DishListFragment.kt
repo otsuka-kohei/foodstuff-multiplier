@@ -1,10 +1,15 @@
 package com.example.foodstuff_multiplier.fragments
 
+import android.app.Activity
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.AdapterView
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.foodstuff_multiplier.Dish
@@ -44,6 +49,18 @@ class DishListFragment : Fragment() {
 
         clearTempFoodstuffList()
 
+        setDishDataToListView()
+
+        dishListView.setOnItemClickListener { adapterView, view, position, l ->
+            val action =
+                DishListFragmentDirections.actionDishListFragmentToInputAmountFragment(dishList[position])
+            findNavController().navigate(action)
+        }
+
+        registerForContextMenu(dishListView)
+    }
+
+    private fun setDishDataToListView() {
         val dbDataList: List<Pair<Int, String>> = FmSQLiteOpenHelper.readAllData()
         dishList = dbDataList.map {
             Json.parse(Dish.serializer(), it.second)
@@ -58,14 +75,6 @@ class DishListFragment : Fragment() {
             dishListView.visibility = View.GONE
             noItem.visibility = View.VISIBLE
         }
-
-        dishListView.setOnItemClickListener { adapterView, view, position, l ->
-            val action =
-                DishListFragmentDirections.actionDishListFragmentToInputAmountFragment(dishList[position])
-            findNavController().navigate(action)
-        }
-
-        registerForContextMenu(dishListView)
     }
 
     private fun getNewDishId(): Int {
@@ -113,9 +122,31 @@ class DishListFragment : Fragment() {
             findNavController().navigate(action)
 
         } else if (item.itemId == R.id.dish_list_delete) {
-
+            val dishId = dishList[position].id
+            val dialog = ConfirmDeleteDishDialog(activity!!, dishId) {
+                setDishDataToListView()
+            }
+            dialog.show(fragmentManager!!, null)
         }
 
         return super.onContextItemSelected(item)
+    }
+}
+
+class ConfirmDeleteDishDialog(
+    val activity: Activity,
+    val deleteDishDataId: Int,
+    val afterDeleteFun: () -> Unit
+) :
+    DialogFragment() {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val builder = AlertDialog.Builder(activity)
+        builder.setMessage("少なくとも1つ以上の材料名と単位を入力してください。")
+        builder.setPositiveButton("はい", DialogInterface.OnClickListener { dialog, id ->
+            FmSQLiteOpenHelper.deleteData(deleteDishDataId)
+            afterDeleteFun()
+        })
+        builder.setNegativeButton("いいえ", null)
+        return builder.create()
     }
 }

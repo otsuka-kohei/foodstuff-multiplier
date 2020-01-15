@@ -11,20 +11,20 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.foodstuff_multiplier.listadapter.AddFoodstuffListAdapter
+import com.example.foodstuff_multiplier.listadapter.InputFoodstuffListAdapter
 import com.example.foodstuff_multiplier.Foodstuff
 
 import com.example.foodstuff_multiplier.R
-import kotlinx.android.synthetic.main.fragment_add_foodstuff.*
+import kotlinx.android.synthetic.main.fragment_input_foodstuff.*
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonDecodingException
 
-class AddFoodstuffFragment : Fragment() {
+class InputFoodstuffFragment : Fragment() {
 
-    private lateinit var addFoodstuffListAdapter: AddFoodstuffListAdapter
+    private lateinit var addFoodstuffListAdapter: InputFoodstuffListAdapter
 
-    private val args: AddFoodstuffFragmentArgs by navArgs()
+    private val args: InputFoodstuffFragmentArgs by navArgs()
 
     private var addNewDish: Boolean = false
 
@@ -33,7 +33,7 @@ class AddFoodstuffFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_foodstuff, container, false)
+        return inflater.inflate(R.layout.fragment_input_foodstuff, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -55,7 +55,7 @@ class AddFoodstuffFragment : Fragment() {
                 val dishName = args.dish!!.name
                 val id = if (addNewDish) args.id else args.dish!!.id
                 val action =
-                    AddFoodstuffFragmentDirections.actionAddFoodstuffFragmentToSelectMainFoodstuffFragment(
+                    InputFoodstuffFragmentDirections.actionInputFoodstuffFragmentToSelectMainFoodstuffFragment(
                         dishName, validFoodStuffList.toTypedArray(), id
                     )
                 findNavController().navigate(action)
@@ -76,7 +76,7 @@ class AddFoodstuffFragment : Fragment() {
         }
 
         addFoodstuffListAdapter =
-            AddFoodstuffListAdapter(
+            InputFoodstuffListAdapter(
                 activity!!,
                 tempFoodstuffList ?: editFoodstuffList ?: defaultFoodstuffList
             ) {
@@ -92,7 +92,7 @@ class AddFoodstuffFragment : Fragment() {
         val emptyFoodstuffItem = Foodstuff("", 0f, "")
         currentFoodstuffList.add(emptyFoodstuffItem)
         addFoodstuffListAdapter =
-            AddFoodstuffListAdapter(
+            InputFoodstuffListAdapter(
                 activity!!,
                 currentFoodstuffList
             ) {

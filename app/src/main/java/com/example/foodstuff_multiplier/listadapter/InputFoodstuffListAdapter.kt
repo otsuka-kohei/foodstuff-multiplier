@@ -13,7 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.foodstuff_multiplier.Foodstuff
 import com.example.foodstuff_multiplier.R
 
-class AddFoodstuffListAdapter(
+class InputFoodstuffListAdapter(
     val activity: Activity,
     val foodstuffList: List<Foodstuff>,
     val onClickAddFoddstuff: () -> Unit
@@ -24,7 +24,7 @@ class AddFoodstuffListAdapter(
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         // メモリには優しくないがViewの使いまわし（convertView）を使うと表示が崩れるので仕方がない
-        val view = activity.layoutInflater.inflate(R.layout.item_add_foodstuff_list, null)
+        val view = activity.layoutInflater.inflate(R.layout.item_input_foodstuff_list, null)
 
         val foodstuffNameEditText: EditText = view.findViewById(R.id.foodstuffNameEditText)
         foodstuffNameEditText.setText(foodstuffList[position].name)
@@ -111,6 +111,7 @@ class AddFoodstuffListAdapter(
             val amountText: String = amountEditText.text.toString()
             amount =
                 if (amountText.isNotEmpty()) amountEditText.text.toString().toFloat() else 0f
+            amount = Math.abs(amount)
         } catch (e: NumberFormatException) {
             amount = 0f
         }

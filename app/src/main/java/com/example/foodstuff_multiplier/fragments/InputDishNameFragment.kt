@@ -37,7 +37,7 @@ class InputDishNameFragment : Fragment() {
                 dishNameEditText.error = "料理名を入力してください。"
             } else {
                 val action =
-                    InputDishNameFragmentDirections.actionInputDishNameFragmentToAddFoodstuffFragment(
+                    InputDishNameFragmentDirections.actionInputDishNameFragmentToInputFoodstuffFragment(
                         dishName,
                         args.dish,
                         args.id

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.AddFoodstuffFragment">
+    tools:context=".fragments.InputFoodstuffFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -29,6 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_add_foodstuff_list" />
+        tools:listitem="@layout/item_input_foodstuff_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

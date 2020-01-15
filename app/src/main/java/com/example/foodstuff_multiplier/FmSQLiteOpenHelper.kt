@@ -52,6 +52,14 @@ class FmSQLiteOpenHelper(val context: Context) : SQLiteOpenHelper(
             db.insert(TABLE_NAME, null, values)
         }
 
+        fun deleteData(dataId: Int) {
+            if (!canUse) {
+                return
+            }
+
+            db.delete(TABLE_NAME, "${COLUMN_NAME_DATA_ID} = ?", arrayOf(dataId.toString()))
+        }
+
         fun updateData(dataId: Int, jsonString: String) {
             if (!canUse) {
                 return
