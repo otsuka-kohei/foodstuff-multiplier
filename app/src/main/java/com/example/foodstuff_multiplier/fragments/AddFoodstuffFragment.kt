@@ -52,7 +52,7 @@ class AddFoodstuffFragment : Fragment() {
                 foodstuffList.filter { it.name.isNotEmpty() && it.unit.isNotEmpty() }
 
             if (validFoodStuffList.isNotEmpty()) {
-                val dishName = if (addNewDish) args.dishName!! else args.dish!!.name
+                val dishName = args.dish!!.name
                 val id = if (addNewDish) args.id else args.dish!!.id
                 val action =
                     AddFoodstuffFragmentDirections.actionAddFoodstuffFragmentToSelectMainFoodstuffFragment(
@@ -66,16 +66,19 @@ class AddFoodstuffFragment : Fragment() {
         }
 
         val emptyFoodstuffItem = Foodstuff("", 0f, "")
+        val defaultFoodstuffList = listOf(emptyFoodstuffItem, emptyFoodstuffItem)
+        val editFoodstuffList =
+            args.dish?.foodstuffList?.toMutableList()?.apply { add(emptyFoodstuffItem) }
+        val tempFoodstuffList = loadTempFoodstuffList()
 
-        val defaultFoodstuffList = loadTempFoodstuffList() ?: args.dish?.foodstuffList ?: listOf(
-            emptyFoodstuffItem,
-            emptyFoodstuffItem
-        )
+        if (editFoodstuffList == null) {
+            Log.d("AddFoodstuffFragment", "edit is null")
+        }
 
         addFoodstuffListAdapter =
             AddFoodstuffListAdapter(
                 activity!!,
-                defaultFoodstuffList
+                tempFoodstuffList ?: editFoodstuffList ?: defaultFoodstuffList
             ) {
                 addNewFoodstuffItem()
             }

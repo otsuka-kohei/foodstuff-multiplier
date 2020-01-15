@@ -3,10 +3,9 @@ package com.example.foodstuff_multiplier.fragments
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.foodstuff_multiplier.Dish
 import com.example.foodstuff_multiplier.FmSQLiteOpenHelper
@@ -19,6 +18,8 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.list
 
 class DishListFragment : Fragment() {
+
+    private lateinit var dishList: List<Dish>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +44,8 @@ class DishListFragment : Fragment() {
 
         clearTempFoodstuffList()
 
-        val dataList: List<Pair<Int, String>> = FmSQLiteOpenHelper.readAllData()
-        val dishList = dataList.map {
+        val dbDataList: List<Pair<Int, String>> = FmSQLiteOpenHelper.readAllData()
+        dishList = dbDataList.map {
             Json.parse(Dish.serializer(), it.second)
         }
 
@@ -63,6 +64,8 @@ class DishListFragment : Fragment() {
                 DishListFragmentDirections.actionDishListFragmentToInputAmountFragment(dishList[position])
             findNavController().navigate(action)
         }
+
+        registerForContextMenu(dishListView)
     }
 
     private fun getNewDishId(): Int {
@@ -76,20 +79,43 @@ class DishListFragment : Fragment() {
     }
 
     private fun clearTempFoodstuffList() {
-        val emptyFoodstuffItem = Foodstuff("", 0f, "")
-
-        val defaultFoodstuffList = listOf(emptyFoodstuffItem, emptyFoodstuffItem)
-
-        val jsonData: String = Json.stringify(Foodstuff.serializer().list, defaultFoodstuffList)
-
         activity?.let {
             val preference = it.applicationContext.getSharedPreferences(
                 "temp_foodstuff_list",
                 Context.MODE_PRIVATE
             )
             val editor = preference.edit()
-            editor.putString("temp_foodstuff_list", jsonData)
+            editor.putString("temp_foodstuff_list", "")
             editor.apply()
         }
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+        activity?.menuInflater?.inflate(R.menu.dish_context, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val adapterContextMenuInfo: AdapterView.AdapterContextMenuInfo =
+            item.menuInfo as AdapterView.AdapterContextMenuInfo
+
+        val position = adapterContextMenuInfo.position
+
+        if (item.itemId == R.id.dish_list_edit) {
+            val dish = dishList[position]
+            val action =
+                DishListFragmentDirections.actionDishListFragmentToInputDishNameFragment(dish = dish)
+            findNavController().navigate(action)
+
+        } else if (item.itemId == R.id.dish_list_delete) {
+
+        }
+
+        return super.onContextItemSelected(item)
     }
 }

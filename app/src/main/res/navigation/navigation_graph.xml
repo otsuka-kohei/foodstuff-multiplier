@@ -41,7 +41,13 @@
             app:popExitAnim="@anim/slide_to_right" />
         <argument
             android:name="id"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="dish"
+            app:argType="com.example.foodstuff_multiplier.Dish"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
     <fragment
@@ -52,8 +58,7 @@
 
         <argument
             android:name="dishName"
-            app:argType="string"
-            app:nullable="true" />
+            app:argType="string" />
         <argument
             android:name="dish"
             android:defaultValue="@null"

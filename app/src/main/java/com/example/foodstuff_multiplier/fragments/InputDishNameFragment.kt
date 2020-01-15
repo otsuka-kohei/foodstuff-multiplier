@@ -26,6 +26,10 @@ class InputDishNameFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        args.dish?.let {
+            dishNameEditText.setText(it.name)
+        }
+
         dishNameNextButton.setOnClickListener {
             val dishName = dishNameEditText.text.toString()
 
@@ -35,7 +39,7 @@ class InputDishNameFragment : Fragment() {
                 val action =
                     InputDishNameFragmentDirections.actionInputDishNameFragmentToAddFoodstuffFragment(
                         dishName,
-                        null,
+                        args.dish,
                         args.id
                     )
                 findNavController().navigate(action)
