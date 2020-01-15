@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.example.foodstuff_multiplier.Foodstuff
 import com.example.foodstuff_multiplier.R
 
 class ScaleResultListAdapter(
     val activity: Activity,
-    val resultList: List<Pair<String,String>>
+    val resultList: List<Pair<String, String>>
 ) :
     BaseAdapter() {
 

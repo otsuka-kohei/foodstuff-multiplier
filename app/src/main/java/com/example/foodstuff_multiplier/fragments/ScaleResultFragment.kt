@@ -42,6 +42,17 @@ class ScaleResultFragment : Fragment() {
         }
         val scaleResultListAdapter = ScaleResultListAdapter(activity!!, results)
         scaleResultListView.adapter = scaleResultListAdapter
+
+
+        val scaledAmountList: List<Float> = dish.foodstuffList.map { it.amount * scale }
+        adjustButton.setOnClickListener {
+            val action =
+                ScaleResultFragmentDirections.actionScaleResultFragmentToAdjustAmountFragment(
+                    args.dish,
+                    scaledAmountList.toFloatArray()
+                )
+            findNavController().navigate(action)
+        }
     }
 
 

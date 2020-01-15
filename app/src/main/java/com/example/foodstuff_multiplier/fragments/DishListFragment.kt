@@ -7,17 +7,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.AdapterView
+import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.foodstuff_multiplier.Dish
 import com.example.foodstuff_multiplier.FmSQLiteOpenHelper
-
 import com.example.foodstuff_multiplier.R
 import com.example.foodstuff_multiplier.listadapter.DishListAdapter
 import kotlinx.android.synthetic.main.fragment_dish_list.*
 import kotlinx.serialization.json.Json
+
 
 class DishListFragment : Fragment() {
 
@@ -29,6 +30,14 @@ class DishListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dish_list, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            activity?.finish()
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

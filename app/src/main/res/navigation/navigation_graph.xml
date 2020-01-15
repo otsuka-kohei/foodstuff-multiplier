@@ -41,13 +41,13 @@
             app:popExitAnim="@anim/slide_to_right" />
         <argument
             android:name="id"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <argument
             android:name="dish"
+            android:defaultValue="@null"
             app:argType="com.example.foodstuff_multiplier.Dish"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
 
     <fragment
@@ -74,8 +74,8 @@
             app:popExitAnim="@anim/slide_to_right" />
         <argument
             android:name="id"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 
 
@@ -106,7 +106,7 @@
         android:id="@+id/confirmDishFragment"
         android:name="com.example.foodstuff_multiplier.fragments.ConfirmDishFragment"
         android:label="確認"
-        tools:layout="@layout/fragment_confirm_dish" >
+        tools:layout="@layout/fragment_confirm_dish">
         <argument
             android:name="dish"
             app:argType="com.example.foodstuff_multiplier.Dish" />
@@ -123,7 +123,7 @@
         android:id="@+id/inputAmountFragment"
         android:name="com.example.foodstuff_multiplier.fragments.InputAmountFragment"
         android:label="材料の量を入力"
-        tools:layout="@layout/fragment_input_amount" >
+        tools:layout="@layout/fragment_input_amount">
         <argument
             android:name="dish"
             app:argType="com.example.foodstuff_multiplier.Dish" />
@@ -133,14 +133,14 @@
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"
             app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_to_right"/>
+            app:popExitAnim="@anim/slide_to_right" />
     </fragment>
 
     <fragment
         android:id="@+id/scaleResultFragment"
         android:name="com.example.foodstuff_multiplier.fragments.ScaleResultFragment"
         android:label="計算結果"
-        tools:layout="@layout/fragment_scale_result" >
+        tools:layout="@layout/fragment_scale_result">
         <argument
             android:name="dish"
             app:argType="com.example.foodstuff_multiplier.Dish" />
@@ -153,7 +153,30 @@
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"
             app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_to_right"/>
+            app:popExitAnim="@anim/slide_to_right" />
+        <action
+            android:id="@+id/action_scaleResultFragment_to_adjustAmountFragment"
+            app:destination="@id/adjustAmountFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adjustAmountFragment"
+        android:name="com.example.foodstuff_multiplier.fragments.AdjustAmountFragment"
+        android:label="量を調整"
+        tools:layout="@layout/fragment_adjust_amount">
+        <action
+            android:id="@+id/action_adjustAmountFragment_to_dishListFragment"
+            app:destination="@id/dishListFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
+        <argument
+            android:name="dish"
+            app:argType="com.example.foodstuff_multiplier.Dish" />
+        <argument
+            android:name="amountList"
+            app:argType="float[]" />
     </fragment>
 
 </navigation>
