@@ -11,6 +11,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.foodstuff_multiplier.Dish
+import com.example.foodstuff_multiplier.FmSQLiteOpenHelper
 import com.example.foodstuff_multiplier.listadapter.InputFoodstuffListAdapter
 import com.example.foodstuff_multiplier.Foodstuff
 
@@ -51,6 +53,9 @@ class InputFoodstuffFragment : Fragment() {
             val validFoodStuffList: List<Foodstuff> =
                 foodstuffList.filter { it.name.isNotEmpty() && it.unit.isNotEmpty() }
 
+            val incompleteFoodStuffList =
+                foodstuffList.filter { it.name.isNotEmpty() xor it.unit.isNotEmpty() }
+
             if (validFoodStuffList.isNotEmpty()) {
                 val dishName = if (addNewDish) args.dishName else args.dish!!.name
                 val id = if (addNewDish) args.id else args.dish!!.id
@@ -58,7 +63,15 @@ class InputFoodstuffFragment : Fragment() {
                     InputFoodstuffFragmentDirections.actionInputFoodstuffFragmentToSelectMainFoodstuffFragment(
                         dishName, validFoodStuffList.toTypedArray(), id
                     )
-                findNavController().navigate(action)
+
+                if (incompleteFoodStuffList.isEmpty()) {
+                    findNavController().navigate(action)
+                } else {
+                    val dialog = ConfirmIncompleteFoodstuffDialog(activity!!) {
+                        findNavController().navigate(action)
+                    }
+                    dialog.show(fragmentManager!!, null)
+                }
             } else {
                 val dialog = AddFoodstuffValidationDialog(activity!!)
                 dialog.show(fragmentManager!!, null)
@@ -153,6 +166,22 @@ class AddFoodstuffValidationDialog(val activity: Activity) : DialogFragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setMessage("少なくとも1つ以上の材料名と単位を入力してください。")
         builder.setPositiveButton("OK", null)
+        return builder.create()
+    }
+}
+
+class ConfirmIncompleteFoodstuffDialog(
+    val activity: Activity,
+    val okFun: () -> Unit
+) :
+    DialogFragment() {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val builder = AlertDialog.Builder(activity)
+        builder.setMessage("入力が完了していない材料があります。\nそれらの項目は追加されませんがよろしいですか？")
+        builder.setPositiveButton("はい") { dialog, id ->
+            okFun()
+        }
+        builder.setNegativeButton("いいえ", null)
         return builder.create()
     }
 }
