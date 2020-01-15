@@ -66,6 +66,8 @@ class DishListFragment : Fragment() {
         if (dishList.isNotEmpty()) {
             dishListView.visibility = View.VISIBLE
             noItem.visibility = View.GONE
+
+            dishList = dishList.sortedWith(compareBy(Dish::name))
             val dishListAdapter = DishListAdapter(activity!!, dishList)
             dishListView.adapter = dishListAdapter
         } else {
