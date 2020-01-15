@@ -1,4 +1,4 @@
-package com.example.foodstuff_multiplier.listadapter
+package com.otk1fd.foodstuff_multiplier.listadapter
 
 import android.app.Activity
 import android.util.Log
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.example.foodstuff_multiplier.R
+import com.otk1fd.foodstuff_multiplier.R
 
 class ScaleResultListAdapter(
     val activity: Activity,

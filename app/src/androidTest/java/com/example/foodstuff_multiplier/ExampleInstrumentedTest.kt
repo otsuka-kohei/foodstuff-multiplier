@@ -1,4 +1,4 @@
-package com.example.foodstuff_multiplier
+package com.otk1fd.foodstuff_multiplier
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.foodstuff_multiplier", appContext.packageName)
+        assertEquals("com.otk1fd.foodstuff_multiplier", appContext.packageName)
     }
 }

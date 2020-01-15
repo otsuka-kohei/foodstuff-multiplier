@@ -1,4 +1,4 @@
-package com.example.foodstuff_multiplier
+package com.otk1fd.foodstuff_multiplier
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,7 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.foodstuff_multiplier.listadapter.DishListAdapter
+import com.otk1fd.foodstuff_multiplier.listadapter.DishListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_dish_list.*
 import kotlinx.serialization.json.Json

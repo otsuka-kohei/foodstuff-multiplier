@@ -1,4 +1,4 @@
-package com.example.foodstuff_multiplier.fragments
+package com.otk1fd.foodstuff_multiplier.fragments
 
 import android.app.Activity
 import android.app.Dialog
@@ -12,10 +12,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.foodstuff_multiplier.Dish
-import com.example.foodstuff_multiplier.FmSQLiteOpenHelper
-import com.example.foodstuff_multiplier.R
-import com.example.foodstuff_multiplier.listadapter.DishListAdapter
+import com.otk1fd.foodstuff_multiplier.Dish
+import com.otk1fd.foodstuff_multiplier.FmSQLiteOpenHelper
+import com.otk1fd.foodstuff_multiplier.R
+import com.otk1fd.foodstuff_multiplier.listadapter.DishListAdapter
 import kotlinx.android.synthetic.main.fragment_dish_list.*
 import kotlinx.serialization.json.Json
 

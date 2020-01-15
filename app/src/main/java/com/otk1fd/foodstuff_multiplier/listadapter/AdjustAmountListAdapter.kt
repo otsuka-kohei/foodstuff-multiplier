@@ -1,4 +1,4 @@
-package com.example.foodstuff_multiplier.listadapter
+package com.otk1fd.foodstuff_multiplier.listadapter
 
 import android.app.Activity
 import android.text.Editable
@@ -10,9 +10,9 @@ import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.foodstuff_multiplier.Foodstuff
-import com.example.foodstuff_multiplier.R
-import com.example.foodstuff_multiplier.toSimpleString
+import com.otk1fd.foodstuff_multiplier.Foodstuff
+import com.otk1fd.foodstuff_multiplier.R
+import com.otk1fd.foodstuff_multiplier.toSimpleString
 
 class AdjustAmountListAdapter(
     val activity: Activity,

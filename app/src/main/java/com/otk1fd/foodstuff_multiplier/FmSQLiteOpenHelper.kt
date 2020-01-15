@@ -1,4 +1,4 @@
-package com.example.foodstuff_multiplier
+package com.otk1fd.foodstuff_multiplier
 
 import android.content.ContentValues
 import android.content.Context

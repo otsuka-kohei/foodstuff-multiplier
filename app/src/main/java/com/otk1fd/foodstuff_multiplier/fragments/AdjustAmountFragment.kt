@@ -1,4 +1,4 @@
-package com.example.foodstuff_multiplier.fragments
+package com.otk1fd.foodstuff_multiplier.fragments
 
 
 import android.os.Bundle
@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
-import com.example.foodstuff_multiplier.R
-import com.example.foodstuff_multiplier.listadapter.AdjustAmountListAdapter
+import com.otk1fd.foodstuff_multiplier.R
+import com.otk1fd.foodstuff_multiplier.listadapter.AdjustAmountListAdapter
 import kotlinx.android.synthetic.main.fragment_adjust_amount.*
 
 /**

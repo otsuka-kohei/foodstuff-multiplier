@@ -12,7 +12,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.example.foodstuff_multiplier"
+        applicationId "com.otk1fd.foodstuff_multiplier"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

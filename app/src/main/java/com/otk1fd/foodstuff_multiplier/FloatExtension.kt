@@ -1,4 +1,4 @@
-package com.example.foodstuff_multiplier
+package com.otk1fd.foodstuff_multiplier
 
 fun Float.toSimpleString(): String {
     if (this.toInt().toFloat() == this) {

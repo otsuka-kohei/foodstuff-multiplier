@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.foodstuff_multiplier">
+    package="com.otk1fd.foodstuff_multiplier">
 
     <application
         android:allowBackup="true"
