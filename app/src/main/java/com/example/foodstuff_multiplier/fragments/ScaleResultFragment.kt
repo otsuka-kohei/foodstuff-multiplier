@@ -36,7 +36,8 @@ class ScaleResultFragment : Fragment() {
         val dish = args.dish
         val scale = args.mainFoodstuffAmount / dish.foodstuffList[dish.mainFoodstuffIndex].amount
         val results: List<Pair<String, String>> = dish.foodstuffList.map {
-            val amount = "${(it.amount * scale).toSimpleString()} ${it.unit}"
+            val amount =
+                if (it.amount > 0f) "${(it.amount * scale).toSimpleString()} ${it.unit}" else it.unit
             Pair(it.name, amount)
         }
         val scaleResultListAdapter = ScaleResultListAdapter(activity!!, results)

@@ -29,12 +29,20 @@ class SelectMainFoodstuffFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         val foodstuffList = args.foodstuffList.toList()
+        val calculatableFoodstuffList = foodstuffList.filter { it.amount > 0f }
+        val incalculatableFoodstuffList = foodstuffList.filter { it.amount == 0f }
+
         val selectMainFoodstuffListAdapter =
             SelectMainFoodstuffListAdapter(
                 activity!!,
-                foodstuffList
+                calculatableFoodstuffList
             ) {
-                val dish = Dish(args.id, args.dishName, it, foodstuffList)
+                val dish = Dish(
+                    args.id,
+                    args.dishName,
+                    it,
+                    calculatableFoodstuffList.plus(incalculatableFoodstuffList)
+                )
 
                 val action =
                     SelectMainFoodstuffFragmentDirections.actionSelectMainFoodstuffFragmentToConfirmDishFragment(
