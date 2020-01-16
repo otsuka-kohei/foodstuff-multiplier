@@ -98,6 +98,7 @@
             android:ems="10"
             android:hint="材料名（例：じゃがいも）"
             android:inputType="text"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
