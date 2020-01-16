@@ -16,8 +16,8 @@ class FmSQLiteOpenHelper(val context: Context) : SQLiteOpenHelper(
         private val DATABASE_VERSION = 1
 
         // データーベース情報を変数に格納
-        private val DATABASE_NAME = "json_serialized.db"
-        private val TABLE_NAME = "json_serialized_db"
+        private val DATABASE_NAME = "data.db"
+        private val TABLE_NAME = "data"
         private val ID = "id"
         private val COLUMN_NAME_DATA_ID = "data_id"
         private val COLUMN_NAME_JSON = "json_data"
