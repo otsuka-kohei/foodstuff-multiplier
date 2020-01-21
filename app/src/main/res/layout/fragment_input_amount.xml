@@ -16,7 +16,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="材料の量を入力してください"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
