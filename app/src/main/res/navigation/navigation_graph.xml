@@ -11,8 +11,8 @@
         android:label="料理一覧"
         tools:layout="@layout/fragment_dish_list">
         <action
-            android:id="@+id/action_dishListFragment_to_inputDishNameFragment"
-            app:destination="@id/inputDishNameFragment"
+            android:id="@+id/action_dishListFragment_to_inputDishInfoFragment"
+            app:destination="@id/inputDishInfoFragment"
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"
             app:popEnterAnim="@anim/slide_from_left"
@@ -27,13 +27,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/inputDishNameFragment"
-        android:name="com.otk1fd.foodstuff_multiplier.fragments.InputDishNameFragment"
-        android:label="料理名を入力"
-        tools:layout="@layout/fragment_input_dish_name">
+        android:id="@+id/inputDishInfoFragment"
+        android:name="com.otk1fd.foodstuff_multiplier.fragments.InputDishInfoFragment"
+        android:label="料理名と人数を入力"
+        tools:layout="@layout/fragment_input_dish_info">
 
         <action
-            android:id="@+id/action_inputDishNameFragment_to_inputFoodstuffFragment"
+            android:id="@+id/action_inputDishInfoFragment_to_inputFoodstuffFragment"
             app:destination="@id/inputFoodstuffFragment"
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"
