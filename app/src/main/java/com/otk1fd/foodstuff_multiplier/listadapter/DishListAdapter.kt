@@ -30,7 +30,7 @@ class DishListAdapter(
 
         val mainFoodstuffTextView: TextView =
             view.findViewById(R.id.mainFoodstuffTextView)
-        mainFoodstuffTextView.text = dish.foodstuffList[dish.mainFoodstuffIndex].name
+        mainFoodstuffTextView.text = dish.foodstuffList[dish.serves].name
 
         return view
     }

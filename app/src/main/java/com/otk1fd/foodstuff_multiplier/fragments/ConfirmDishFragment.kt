@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.otk1fd.foodstuff_multiplier.Dish
@@ -16,7 +15,6 @@ import com.otk1fd.foodstuff_multiplier.R
 import com.otk1fd.foodstuff_multiplier.listadapter.FoodstuffListAdapter
 import kotlinx.android.synthetic.main.fragment_confirm_dish.*
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.stringify
 
 class ConfirmDishFragment : Fragment() {
 
@@ -35,7 +33,7 @@ class ConfirmDishFragment : Fragment() {
 
         val dish = args.dish
         dishNameTextView.text = dish.name
-        mainFoodstuffTextView.text = dish.foodstuffList[dish.mainFoodstuffIndex].name
+        mainFoodstuffTextView.text = dish.foodstuffList[dish.serves].name
 
         val foodstuffListAdapter = FoodstuffListAdapter(activity!!, dish.foodstuffList) {
 

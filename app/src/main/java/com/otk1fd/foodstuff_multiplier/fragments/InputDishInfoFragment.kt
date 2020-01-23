@@ -33,6 +33,16 @@ class InputDishInfoFragment : Fragment() {
         dishNameNextButton.setOnClickListener {
             val dishName = dishNameEditText.text.toString()
 
+            var serves: Int
+            try {
+                val servesText: String = servesEditText.text.toString()
+                serves =
+                    if (servesText.isNotEmpty()) servesEditText.text.toString().toInt() else 0
+                serves = Math.abs(serves)
+            } catch (e: NumberFormatException) {
+                serves = 0
+            }
+
             if (dishName.isEmpty()) {
                 dishNameEditText.error = "料理名を入力してください。"
             } else {
