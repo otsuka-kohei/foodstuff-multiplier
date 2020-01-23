@@ -65,42 +65,19 @@
             app:argType="com.otk1fd.foodstuff_multiplier.Dish"
             app:nullable="true" />
 
-        <action
-            android:id="@+id/action_inputFoodstuffFragment_to_selectMainFoodstuffFragment"
-            app:destination="@id/selectMainFoodstuffFragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_to_right" />
         <argument
             android:name="id"
             android:defaultValue="-1"
             app:argType="integer" />
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/selectMainFoodstuffFragment"
-        android:name="com.otk1fd.foodstuff_multiplier.fragments.SelectMainFoodstuffFragment"
-        android:label="メインとなる材料を選択"
-        tools:layout="@layout/fragment_select_main_foodstuff">
-        <argument
-            android:name="dishName"
-            app:argType="string" />
-        <argument
-            android:name="foodstuffList"
-            app:argType="com.otk1fd.foodstuff_multiplier.Foodstuff[]" />
         <action
-            android:id="@+id/action_selectMainFoodstuffFragment_to_confirmDishFragment"
+            android:id="@+id/action_inputFoodstuffFragment_to_confirmDishFragment"
             app:destination="@id/confirmDishFragment"
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_to_right" />
-        <argument
-            android:name="id"
-            app:argType="integer" />
     </fragment>
+
 
     <fragment
         android:id="@+id/confirmDishFragment"
