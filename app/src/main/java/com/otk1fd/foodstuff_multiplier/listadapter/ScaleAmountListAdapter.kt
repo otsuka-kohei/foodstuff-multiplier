@@ -14,10 +14,9 @@ import com.otk1fd.foodstuff_multiplier.Foodstuff
 import com.otk1fd.foodstuff_multiplier.R
 import com.otk1fd.foodstuff_multiplier.toSimpleString
 
-class AdjustAmountListAdapter(
+class ScaleAmountListAdapter(
     val activity: Activity,
-    val foodstuffList: List<Foodstuff>,
-    val amountList: List<Float>
+    val foodstuffList: List<Foodstuff>
 ) :
     BaseAdapter() {
 
@@ -35,7 +34,7 @@ class AdjustAmountListAdapter(
 
         val amountEditText: EditText = view.findViewById(R.id.scaleAmountEditText)
         if (foodstuffList[position].amount > 0f) {
-            amountEditText.setText(amountList[position].toSimpleString())
+            amountEditText.setText(foodstuffList[position].amount.toSimpleString())
         } else {
             amountEditText.visibility = View.GONE
         }

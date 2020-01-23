@@ -59,7 +59,7 @@ class DishListFragment : Fragment() {
 
         dishListView.setOnItemClickListener { adapterView, view, position, l ->
             val action =
-                DishListFragmentDirections.actionDishListFragmentToInputAmountFragment(dishList[position])
+                DishListFragmentDirections.actionDishListFragmentToAdjustAmountFragment(dishList[position])
             findNavController().navigate(action)
         }
 

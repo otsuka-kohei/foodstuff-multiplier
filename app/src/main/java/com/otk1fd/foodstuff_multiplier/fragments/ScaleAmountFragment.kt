@@ -10,33 +10,33 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 import com.otk1fd.foodstuff_multiplier.R
-import com.otk1fd.foodstuff_multiplier.listadapter.AdjustAmountListAdapter
-import kotlinx.android.synthetic.main.fragment_adjust_amount.*
+import com.otk1fd.foodstuff_multiplier.listadapter.ScaleAmountListAdapter
+import kotlinx.android.synthetic.main.fragment_scale_amount.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class AdjustAmountFragment : Fragment() {
+class ScaleAmountFragment : Fragment() {
 
-    private val args: AdjustAmountFragmentArgs by navArgs()
+    private val args: ScaleAmountFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_adjust_amount, container, false)
+        return inflater.inflate(R.layout.fragment_scale_amount, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         finishButton.setOnClickListener {
-            findNavController().navigate(R.id.action_adjustAmountFragment_to_dishListFragment)
+            findNavController().navigate(R.id.action_scaleAmountFragment_to_dishListFragment)
         }
 
         val adjustAmountListAdapter =
-            AdjustAmountListAdapter(activity!!, args.dish.foodstuffList, args.amountList.toList())
+            ScaleAmountListAdapter(activity!!, args.dish.foodstuffList)
         adjustAmountListView.adapter = adjustAmountListAdapter
     }
 
