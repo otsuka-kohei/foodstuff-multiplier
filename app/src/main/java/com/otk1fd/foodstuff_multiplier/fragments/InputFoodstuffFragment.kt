@@ -59,9 +59,12 @@ class InputFoodstuffFragment : Fragment() {
             if (validFoodStuffList.isNotEmpty()) {
                 val dishName = if (addNewDish) args.dishName else args.dish!!.name
                 val id = if (addNewDish) args.id else args.dish!!.id
+
+                val dish = Dish(id, dishName, 0, validFoodStuffList)
+
                 val action =
-                    InputFoodstuffFragmentDirections.actionInputFoodstuffFragmentToSelectMainFoodstuffFragment(
-                        dishName, validFoodStuffList.toTypedArray(), id
+                    InputFoodstuffFragmentDirections.actionInputFoodstuffFragmentToConfirmDishFragment(
+                        dish
                     )
 
                 if (incompleteFoodStuffList.isEmpty()) {
