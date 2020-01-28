@@ -33,7 +33,7 @@ class ConfirmDishFragment : Fragment() {
 
         val dish = args.dish
         dishNameTextView.text = dish.name
-        mainFoodstuffTextView.text = dish.foodstuffList[dish.serves].name
+        servesTextView.text = dish.serves.toString()
 
         val foodstuffListAdapter = FoodstuffListAdapter(activity!!, dish.foodstuffList) {
 

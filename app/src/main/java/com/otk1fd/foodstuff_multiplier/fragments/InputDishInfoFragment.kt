@@ -50,7 +50,8 @@ class InputDishInfoFragment : Fragment() {
                     InputDishInfoFragmentDirections.actionInputDishInfoFragmentToInputFoodstuffFragment(
                         dishName,
                         args.dish,
-                        args.id
+                        args.id,
+                        serves
                     )
                 findNavController().navigate(action)
             }
