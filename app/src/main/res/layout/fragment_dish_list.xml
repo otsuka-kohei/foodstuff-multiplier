@@ -26,6 +26,7 @@
             android:layout_marginEnd="16dp"
             android:gravity="center"
             android:text="アイテムがありません。\n右下の「+」ボタンを押してアイテムを追加してください。"
+            android:textColor="@color/text"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
