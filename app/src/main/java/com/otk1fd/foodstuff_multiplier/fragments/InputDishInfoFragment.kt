@@ -28,6 +28,9 @@ class InputDishInfoFragment : Fragment() {
 
         args.dish?.let {
             dishNameEditText.setText(it.name)
+            if (it.serves > 0) {
+                servesEditText.setText(it.serves.toString())
+            }
         }
 
         dishNameNextButton.setOnClickListener {
