@@ -15,8 +15,8 @@ android {
         applicationId "com.otk1fd.foodstuff_multiplier"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 2
-        versionName '1.1'
+        versionCode 3
+        versionName '1.2'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
