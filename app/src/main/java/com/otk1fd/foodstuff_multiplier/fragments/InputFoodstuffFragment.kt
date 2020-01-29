@@ -61,7 +61,15 @@ class InputFoodstuffFragment : Fragment() {
                 val id = if (addNewDish) args.id else args.dish!!.id
                 val serves = args.serves
 
-                val dish = Dish(id, dishName, serves, validFoodStuffList)
+                val calculableFoodstuffList = validFoodStuffList.filter { it.amount > 0f }
+                val incalculableFoodstuffList = validFoodStuffList.filter { it.amount == 0f }
+
+                val dish = Dish(
+                    id,
+                    dishName,
+                    serves,
+                    calculableFoodstuffList.plus(incalculableFoodstuffList)
+                )
 
                 val action =
                     InputFoodstuffFragmentDirections.actionInputFoodstuffFragmentToConfirmDishFragment(
