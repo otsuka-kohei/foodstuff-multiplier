@@ -23,6 +23,10 @@ class SelectMainFoodstuffListAdapter(
             Log.d("ListView", "View is null")
         }
 
+        if (position % 2 == 0) {
+            view.setBackgroundResource(R.color.listItem)
+        }
+
         val candidateFoodstuffTextView: TextView =
             view.findViewById(R.id.candidateFoodstuffTextView)
         candidateFoodstuffTextView.text = foodstuffList[position].name

@@ -58,7 +58,6 @@
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:gravity="end"
-                android:hint="人数"
                 android:inputType="number"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"

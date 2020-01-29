@@ -29,6 +29,10 @@ class ScaleAmountListAdapter(
         // メモリには優しくないがViewの使いまわし（convertView）を使うと表示が崩れるので仕方がない
         val view = activity.layoutInflater.inflate(R.layout.item_adjust_amount_list, null)
 
+        if (position % 2 == 0) {
+            view.setBackgroundResource(R.color.listItem)
+        }
+
         val foodstuffNameTextView: TextView = view.findViewById(R.id.foodstuffNameTextView)
         foodstuffNameTextView.text = foodstuffList[position].name
 

@@ -27,6 +27,10 @@ class InputFoodstuffListAdapter(
         // メモリには優しくないがViewの使いまわし（convertView）を使うと表示が崩れるので仕方がない
         val view = activity.layoutInflater.inflate(R.layout.item_input_foodstuff_list, null)
 
+        if (position % 2 == 0) {
+            view.setBackgroundResource(R.color.listItem)
+        }
+
         val foodstuffNameEditText: EditText = view.findViewById(R.id.foodstuffNameEditText)
         foodstuffNameEditText.setText(foodstuffList[position].name)
 
