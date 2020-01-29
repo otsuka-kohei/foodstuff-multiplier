@@ -28,9 +28,16 @@ class DishListAdapter(
             view.findViewById(R.id.dishNameTextView)
         dishNameTextView.text = dish.name
 
-        val mainFoodstuffTextView: TextView =
-            view.findViewById(R.id.mainFoodstuffTextView)
-        mainFoodstuffTextView.text = dish.foodstuffList[dish.mainFoodstuffIndex].name
+        val foodstuffTextView: TextView =
+            view.findViewById(R.id.foodstuffTextView)
+        var foodstuffText = ""
+        dish.foodstuffList.forEach {
+            if (foodstuffText.isNotEmpty()) {
+                foodstuffText += ", "
+            }
+            foodstuffText += it.name
+        }
+        foodstuffTextView.text = foodstuffText
 
         return view
     }

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.otk1fd.foodstuff_multiplier.Foodstuff
 
 import com.otk1fd.foodstuff_multiplier.R
 import com.otk1fd.foodstuff_multiplier.listadapter.ScaleAmountListAdapter
@@ -35,8 +36,18 @@ class ScaleAmountFragment : Fragment() {
             findNavController().navigate(R.id.action_scaleAmountFragment_to_dishListFragment)
         }
 
+        val dish = args.dish
+
+        var foodstuffList: List<Foodstuff>
+        if (dish.serves > 0) {
+            val serves = Foodstuff("人数", dish.serves.toFloat(), "人前")
+            foodstuffList = listOf(serves).plus(dish.foodstuffList)
+        } else {
+            foodstuffList = dish.foodstuffList
+        }
+
         val adjustAmountListAdapter =
-            ScaleAmountListAdapter(activity!!, args.dish.foodstuffList)
+            ScaleAmountListAdapter(activity!!, foodstuffList)
         adjustAmountListView.adapter = adjustAmountListAdapter
     }
 

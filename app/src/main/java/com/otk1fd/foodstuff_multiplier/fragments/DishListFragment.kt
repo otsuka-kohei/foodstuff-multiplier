@@ -48,7 +48,7 @@ class DishListFragment : Fragment() {
             if (newId >= 0) {
                 Log.d("DishListFragment", "new ID : ${newId}")
                 val action =
-                    DishListFragmentDirections.actionDishListFragmentToInputDishNameFragment(newId)
+                    DishListFragmentDirections.actionDishListFragmentToInputDishInfoFragment(newId)
                 findNavController().navigate(action)
             }
         }
@@ -126,7 +126,7 @@ class DishListFragment : Fragment() {
         if (item.itemId == R.id.dish_list_edit) {
             val dish = dishList[position]
             val action =
-                DishListFragmentDirections.actionDishListFragmentToInputDishNameFragment(dish = dish)
+                DishListFragmentDirections.actionDishListFragmentToInputDishInfoFragment(dish = dish)
             findNavController().navigate(action)
 
         } else if (item.itemId == R.id.dish_list_delete) {

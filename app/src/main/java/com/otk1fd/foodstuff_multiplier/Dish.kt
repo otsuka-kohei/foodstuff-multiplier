@@ -9,6 +9,6 @@ import kotlinx.serialization.Serializable
 data class Dish(
     val id: Int = -1,
     val name: String,
-    val mainFoodstuffIndex: Int,
+    internal val serves: Int = 0,
     val foodstuffList: List<Foodstuff>
 ) : Parcelable
