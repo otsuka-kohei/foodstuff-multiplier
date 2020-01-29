@@ -4,5 +4,6 @@ fun Float.toSimpleString(): String {
     if (this.toInt().toFloat() == this) {
         return this.toInt().toString()
     }
-    return this.toString()
+
+    return String.format("%.1f", this)
 }
