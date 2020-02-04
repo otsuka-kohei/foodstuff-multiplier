@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".fragments.ConfirmDishFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -34,6 +35,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="人数："
+            android:textColor="@color/text"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +51,7 @@
             android:layout_marginBottom="8dp"
             android:gravity="end"
             android:text="TextView"
+            android:textColor="@color/text"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView4"
@@ -63,6 +66,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="料理名："
+            android:textColor="@color/text"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -76,6 +80,7 @@
             android:layout_marginEnd="8dp"
             android:gravity="end"
             android:text="TextView"
+            android:textColor="@color/text"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/barrier"
@@ -97,6 +102,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="人前"
+            android:textColor="@color/text"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -109,8 +115,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="32dp"
-        android:divider="@color/colorPrimaryDark"
-        android:dividerHeight="1dp"
+        android:divider="@null"
         app:layout_constraintBottom_toTopOf="@+id/confirmButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

@@ -1,6 +1,7 @@
 package com.otk1fd.foodstuff_multiplier.listadapter
 
 import android.app.Activity
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,10 @@ class DishListAdapter(
             convertView ?: activity.layoutInflater.inflate(R.layout.item_dish_list, null)
         if (view == null) {
             Log.d("ListView", "View is null")
+        }
+
+        if (position % 2 == 0) {
+            view.setBackgroundResource(R.color.listItem)
         }
 
         val dish = dishList[position]

@@ -8,6 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
+    </style>
+
+    <style name="ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="titleTextStyle">@style/ActionBarTitleStyle</item>
+    </style>
+
+    <style name="ActionBarTitleStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

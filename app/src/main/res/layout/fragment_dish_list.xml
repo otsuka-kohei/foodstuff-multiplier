@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".fragments.DishListFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -25,6 +26,7 @@
             android:layout_marginEnd="16dp"
             android:gravity="center"
             android:text="アイテムがありません。\n右下の「+」ボタンを押してアイテムを追加してください。"
+            android:textColor="@color/text"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,8 +61,7 @@
         android:id="@+id/dishListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:divider="@color/colorPrimaryDark"
-        android:dividerHeight="1dp"
+        android:divider="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

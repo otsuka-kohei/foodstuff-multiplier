@@ -3,13 +3,11 @@ package com.otk1fd.foodstuff_multiplier.listadapter
 import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.otk1fd.foodstuff_multiplier.Foodstuff
 import com.otk1fd.foodstuff_multiplier.R
 import com.otk1fd.foodstuff_multiplier.toSimpleString
@@ -27,7 +25,11 @@ class ScaleAmountListAdapter(
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         // メモリには優しくないがViewの使いまわし（convertView）を使うと表示が崩れるので仕方がない
-        val view = activity.layoutInflater.inflate(R.layout.item_adjust_amount_list, null)
+        val view = activity.layoutInflater.inflate(R.layout.item_scale_amount_list, null)
+
+        if (position % 2 == 0) {
+            view.setBackgroundResource(R.color.listItem)
+        }
 
         val foodstuffNameTextView: TextView = view.findViewById(R.id.foodstuffNameTextView)
         foodstuffNameTextView.text = foodstuffList[position].name
@@ -36,7 +38,7 @@ class ScaleAmountListAdapter(
         if (foodstuffList[position].amount > 0f) {
             amountEditText.setText(foodstuffList[position].amount.toSimpleString())
         } else {
-            amountEditText.visibility = View.GONE
+            amountEditText.visibility = View.INVISIBLE
         }
         if (!editTextMap.keys.contains(position)) {
             editTextMap[position] = amountEditText
