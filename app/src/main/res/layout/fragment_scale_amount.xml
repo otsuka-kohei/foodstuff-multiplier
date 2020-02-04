@@ -13,13 +13,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
-        android:divider="@color/listItem"
-        android:dividerHeight="1dp"
+        android:divider="@null"
         app:layout_constraintBottom_toTopOf="@+id/finishButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_adjust_amount_list" />
+        tools:listitem="@layout/item_scale_amount_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/finishButton"
