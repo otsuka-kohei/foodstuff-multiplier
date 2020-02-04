@@ -5,6 +5,6 @@
     <color name="colorAccent">#96514d</color>
 
     <color name="text">#6f4b3e</color>
-    <color name="background">#fef4f4</color>
+    <color name="background">#fffffc</color>
     <color name="listItem">#fff1cf</color>
 </resources>
