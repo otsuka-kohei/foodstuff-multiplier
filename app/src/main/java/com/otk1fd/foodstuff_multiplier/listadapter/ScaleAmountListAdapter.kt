@@ -18,8 +18,8 @@ class ScaleAmountListAdapter(
 ) :
     BaseAdapter() {
 
-    val mutableFoodstuffList = foodstuffList.toMutableList()
     val editTextMap = mutableMapOf<Int, EditText>()
+    var scale = 1f
 
     var updaingEditText = false
 
@@ -36,13 +36,11 @@ class ScaleAmountListAdapter(
 
         val amountEditText: EditText = view.findViewById(R.id.scaleAmountEditText)
         if (foodstuffList[position].amount > 0f) {
-            amountEditText.setText(foodstuffList[position].amount.toSimpleString())
+            amountEditText.setText((foodstuffList[position].amount * scale).toSimpleString())
         } else {
             amountEditText.visibility = View.INVISIBLE
         }
-        if (!editTextMap.keys.contains(position)) {
-            editTextMap[position] = amountEditText
-        }
+        editTextMap[position] = amountEditText
 
         val unitTextView: TextView = view.findViewById(R.id.unitTextView)
         unitTextView.text = foodstuffList[position].unit
@@ -61,10 +59,10 @@ class ScaleAmountListAdapter(
                     return
                 }
 
-                val scale = amount / foodstuffList[position].amount
+                scale = amount / foodstuffList[position].amount
 
                 updaingEditText = true
-                editTextMap.map {
+                editTextMap.forEach {
                     if (it.key != position) {
                         it.value.setText((foodstuffList[it.key].amount * scale).toSimpleString())
                     }
@@ -90,9 +88,5 @@ class ScaleAmountListAdapter(
 
     override fun getCount(): Int {
         return foodstuffList.size
-    }
-
-    fun getFoodStufItemList(): List<Foodstuff> {
-        return mutableFoodstuffList.toList()
     }
 }
