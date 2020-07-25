@@ -77,7 +77,7 @@ class DishListFragment : Fragment() {
             noItem.visibility = View.GONE
 
             dishList = dishList.sortedWith(compareBy(Dish::name))
-            val dishListAdapter = DishListAdapter(activity!!, dishList)
+            val dishListAdapter = DishListAdapter(requireActivity(), dishList)
             dishListView.adapter = dishListAdapter
         } else {
             dishListView.visibility = View.GONE
@@ -131,10 +131,10 @@ class DishListFragment : Fragment() {
 
         } else if (item.itemId == R.id.dish_list_delete) {
             val dish = dishList[position]
-            val dialog = ConfirmDeleteDishDialog(activity!!, dish) {
+            val dialog = ConfirmDeleteDishDialog(requireActivity(), dish) {
                 setDishDataToListView()
             }
-            dialog.show(fragmentManager!!, null)
+            dialog.show(parentFragmentManager, null)
         }
 
         return super.onContextItemSelected(item)

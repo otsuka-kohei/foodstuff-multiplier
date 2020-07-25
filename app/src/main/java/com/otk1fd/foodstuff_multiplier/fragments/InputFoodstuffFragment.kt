@@ -18,9 +18,9 @@ import com.otk1fd.foodstuff_multiplier.Foodstuff
 
 import com.otk1fd.foodstuff_multiplier.R
 import kotlinx.android.synthetic.main.fragment_input_foodstuff.*
-import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonDecodingException
+import kotlinx.serialization.builtins.list
 
 class InputFoodstuffFragment : Fragment() {
 
