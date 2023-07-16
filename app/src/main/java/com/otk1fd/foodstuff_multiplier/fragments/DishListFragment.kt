@@ -15,8 +15,10 @@ import androidx.navigation.fragment.findNavController
 import com.otk1fd.foodstuff_multiplier.Dish
 import com.otk1fd.foodstuff_multiplier.FmSQLiteOpenHelper
 import com.otk1fd.foodstuff_multiplier.R
+import com.otk1fd.foodstuff_multiplier.databinding.ActivityMainBinding
+import com.otk1fd.foodstuff_multiplier.databinding.FragmentConfirmDishBinding
+import com.otk1fd.foodstuff_multiplier.databinding.FragmentDishListBinding
 import com.otk1fd.foodstuff_multiplier.listadapter.DishListAdapter
-import kotlinx.android.synthetic.main.fragment_dish_list.*
 import kotlinx.serialization.json.Json
 
 
@@ -24,12 +26,15 @@ class DishListFragment : Fragment() {
 
     private lateinit var dishList: List<Dish>
 
+    private lateinit var binding: FragmentDishListBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dish_list, container, false)
+        binding = FragmentDishListBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,15 +45,16 @@ class DishListFragment : Fragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        addDishButton.setOnClickListener {
+        binding.addDishButton.setOnClickListener {
             val newId = getNewDishId()
+            Log.d("DishListFragment", "new ID : $newId")
             if (newId >= 0) {
-                Log.d("DishListFragment", "new ID : ${newId}")
+                val newDish = Dish(id = newId)
                 val action =
-                    DishListFragmentDirections.actionDishListFragmentToInputDishInfoFragment(newId)
+                    DishListFragmentDirections.actionDishListFragmentToInputDishInfoFragment(newDish)
                 findNavController().navigate(action)
             }
         }
@@ -57,31 +63,31 @@ class DishListFragment : Fragment() {
 
         setDishDataToListView()
 
-        dishListView.setOnItemClickListener { adapterView, view, position, l ->
+        binding.dishListview.setOnItemClickListener { _, _, position, _ ->
             val action =
                 DishListFragmentDirections.actionDishListFragmentToAdjustAmountFragment(dishList[position])
             findNavController().navigate(action)
         }
 
-        registerForContextMenu(dishListView)
+        registerForContextMenu(binding.dishListview)
     }
 
     private fun setDishDataToListView() {
         val dbDataList: List<Pair<Int, String>> = FmSQLiteOpenHelper.readAllData()
         dishList = dbDataList.map {
-            Json.parse(Dish.serializer(), it.second)
+            Json.decodeFromString(Dish.serializer(), it.second)
         }
 
         if (dishList.isNotEmpty()) {
-            dishListView.visibility = View.VISIBLE
-            noItem.visibility = View.GONE
+            binding.dishListview.visibility = View.VISIBLE
+            binding.noItemMessage.visibility = View.GONE
 
             dishList = dishList.sortedWith(compareBy(Dish::name))
             val dishListAdapter = DishListAdapter(requireActivity(), dishList)
-            dishListView.adapter = dishListAdapter
+            binding.dishListview.adapter = dishListAdapter
         } else {
-            dishListView.visibility = View.GONE
-            noItem.visibility = View.VISIBLE
+            binding.dishListview.visibility = View.GONE
+            binding.noItemMessage.visibility = View.VISIBLE
         }
     }
 

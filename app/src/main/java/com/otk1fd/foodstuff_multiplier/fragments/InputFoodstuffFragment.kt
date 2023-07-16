@@ -12,15 +12,13 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.otk1fd.foodstuff_multiplier.Dish
-import com.otk1fd.foodstuff_multiplier.FmSQLiteOpenHelper
 import com.otk1fd.foodstuff_multiplier.listadapter.InputFoodstuffListAdapter
 import com.otk1fd.foodstuff_multiplier.Foodstuff
 
-import com.otk1fd.foodstuff_multiplier.R
-import kotlinx.android.synthetic.main.fragment_input_foodstuff.*
+import com.otk1fd.foodstuff_multiplier.databinding.FragmentInputFoodstuffBinding
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonDecodingException
-import kotlinx.serialization.builtins.list
 
 class InputFoodstuffFragment : Fragment() {
 
@@ -28,28 +26,37 @@ class InputFoodstuffFragment : Fragment() {
 
     private val args: InputFoodstuffFragmentArgs by navArgs()
 
-    private var addNewDish: Boolean = false
+    private lateinit var binding: FragmentInputFoodstuffBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_input_foodstuff, container, false)
+        binding = FragmentInputFoodstuffBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        if (args.id != -1) {
-            addNewDish = true
-        }
+        val emptyFoodstuffItem = Foodstuff("", 0f, "")
+        val editFoodstuffList =
+            args.dish.foodstuffList.toMutableList().apply { add(emptyFoodstuffItem) }
+        val tempFoodstuffList = loadTempFoodstuffList()
 
-        addFoodstuffNextButton.setOnClickListener {
-            Log.d("AddFoodStuffState", addNewDish.toString())
+        addFoodstuffListAdapter =
+            InputFoodstuffListAdapter(
+                requireActivity(),
+                tempFoodstuffList ?: editFoodstuffList
+            ) {
+                addNewFoodstuffItem()
+            }
+        binding.inputFoodstuffListview.adapter = addFoodstuffListAdapter
 
+        binding.nextButton.setOnClickListener {
             val foodstuffList: List<Foodstuff> =
-                addFoodstuffListAdapter.getFoodStufItemList()
+                addFoodstuffListAdapter.getFoodstuffItemList()
             val validFoodStuffList: List<Foodstuff> =
                 foodstuffList.filter { it.name.isNotEmpty() && it.unit.isNotEmpty() }
 
@@ -57,17 +64,13 @@ class InputFoodstuffFragment : Fragment() {
                 foodstuffList.filter { it.name.isNotEmpty() xor it.unit.isNotEmpty() }
 
             if (validFoodStuffList.isNotEmpty()) {
-                val dishName = args.dishName
-                val id = if (addNewDish) args.id else args.dish!!.id
-                val serves = args.serves
-
                 val calculableFoodstuffList = validFoodStuffList.filter { it.amount > 0f }
                 val incalculableFoodstuffList = validFoodStuffList.filter { it.amount == 0f }
 
                 val dish = Dish(
-                    id,
-                    dishName,
-                    serves,
+                    args.dish.id,
+                    args.dish.name,
+                    args.dish.serves,
                     calculableFoodstuffList.plus(incalculableFoodstuffList)
                 )
 
@@ -76,55 +79,36 @@ class InputFoodstuffFragment : Fragment() {
                         dish
                     )
 
-                if (incompleteFoodStuffList.isEmpty()) {
-                    findNavController().navigate(action)
-                } else {
-                    val dialog = ConfirmIncompleteFoodstuffDialog(activity!!) {
+                if (incompleteFoodStuffList.isNotEmpty()) {
+                    val dialog = ConfirmIncompleteFoodstuffDialog(requireActivity()) {
                         findNavController().navigate(action)
                     }
-                    dialog.show(fragmentManager!!, null)
+                    dialog.show(requireActivity().supportFragmentManager, null)
+                } else {
+                    findNavController().navigate(action)
                 }
             } else {
-                val dialog = AddFoodstuffValidationDialog(activity!!)
-                dialog.show(fragmentManager!!, null)
+                val dialog = AddFoodstuffValidationDialog(requireActivity())
+                dialog.show(requireActivity().supportFragmentManager, null)
             }
         }
-
-        val emptyFoodstuffItem = Foodstuff("", 0f, "")
-        val defaultFoodstuffList = listOf(emptyFoodstuffItem, emptyFoodstuffItem)
-        val editFoodstuffList =
-            args.dish?.foodstuffList?.toMutableList()?.apply { add(emptyFoodstuffItem) }
-        val tempFoodstuffList = loadTempFoodstuffList()
-
-        if (editFoodstuffList == null) {
-            Log.d("AddFoodstuffFragment", "edit is null")
-        }
-
-        addFoodstuffListAdapter =
-            InputFoodstuffListAdapter(
-                activity!!,
-                tempFoodstuffList ?: editFoodstuffList ?: defaultFoodstuffList
-            ) {
-                addNewFoodstuffItem()
-            }
-        addFoodStuffListView.adapter = addFoodstuffListAdapter
     }
 
-    fun addNewFoodstuffItem() {
+    private fun addNewFoodstuffItem() {
         val currentFoodstuffList: MutableList<Foodstuff> =
-            addFoodstuffListAdapter.getFoodStufItemList().toMutableList()
+            addFoodstuffListAdapter.getFoodstuffItemList().toMutableList()
 
         val emptyFoodstuffItem = Foodstuff("", 0f, "")
         currentFoodstuffList.add(emptyFoodstuffItem)
         addFoodstuffListAdapter =
             InputFoodstuffListAdapter(
-                activity!!,
+                requireActivity(),
                 currentFoodstuffList
             ) {
                 addNewFoodstuffItem()
             }
-        addFoodStuffListView.adapter = addFoodstuffListAdapter
-        addFoodStuffListView.setSelection(currentFoodstuffList.size + 1)
+        binding.inputFoodstuffListview.adapter = addFoodstuffListAdapter
+        binding.inputFoodstuffListview.setSelection(currentFoodstuffList.size + 1)
     }
 
     override fun onPause() {
@@ -132,13 +116,13 @@ class InputFoodstuffFragment : Fragment() {
 
         Log.d("defaultFoodstuffList", "save state")
         val foodstuffList: List<Foodstuff> =
-            addFoodstuffListAdapter.getFoodStufItemList()
+            addFoodstuffListAdapter.getFoodstuffItemList()
         saveTempFoodstuffList(foodstuffList)
     }
 
     private fun saveTempFoodstuffList(foodstuffList: List<Foodstuff>) {
 
-        val jsonData: String = Json.stringify(Foodstuff.serializer().list, foodstuffList)
+        val jsonData: String = Json.encodeToString(ListSerializer(Foodstuff.serializer()), foodstuffList)
 
         activity?.let {
             val preference = it.applicationContext.getSharedPreferences(
@@ -161,8 +145,8 @@ class InputFoodstuffFragment : Fragment() {
             jsonData?.let {
                 var foodstuffList: List<Foodstuff>?
                 try {
-                    foodstuffList = Json.parse(Foodstuff.serializer().list, jsonData)
-                } catch (e: JsonDecodingException) {
+                    foodstuffList = Json.decodeFromString(ListSerializer(Foodstuff.serializer()), jsonData)
+                } catch (e: SerializationException) {
                     foodstuffList = null
                 }
                 return foodstuffList
@@ -190,7 +174,7 @@ class ConfirmIncompleteFoodstuffDialog(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
         builder.setMessage("入力が完了していない材料があります。\nそれらの項目は追加されませんがよろしいですか？")
-        builder.setPositiveButton("はい") { dialog, id ->
+        builder.setPositiveButton("はい") { _, _ ->
             okFun()
         }
         builder.setNegativeButton("いいえ", null)

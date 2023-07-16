@@ -12,40 +12,46 @@ import com.otk1fd.foodstuff_multiplier.Dish
 import com.otk1fd.foodstuff_multiplier.FmSQLiteOpenHelper
 
 import com.otk1fd.foodstuff_multiplier.R
+import com.otk1fd.foodstuff_multiplier.databinding.ActivityMainBinding
+import com.otk1fd.foodstuff_multiplier.databinding.FragmentConfirmDishBinding
+import com.otk1fd.foodstuff_multiplier.databinding.FragmentDishListBinding
 import com.otk1fd.foodstuff_multiplier.listadapter.FoodstuffListAdapter
-import kotlinx.android.synthetic.main.fragment_confirm_dish.*
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.stringify
 
 class ConfirmDishFragment : Fragment() {
 
     private val args: ConfirmDishFragmentArgs by navArgs()
 
+    private lateinit var binding: FragmentConfirmDishBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_confirm_dish, container, false)
+        binding = FragmentConfirmDishBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         val dish = args.dish
-        dishNameTextView.text = dish.name
-        servesTextView.text = dish.serves.toString()
+        binding.dishNameTextView.text = dish.name
+        binding.servesTextView.text = dish.serves.toString()
 
-        val foodstuffListAdapter = FoodstuffListAdapter(activity!!, dish.foodstuffList) {
+        val foodstuffListAdapter = FoodstuffListAdapter(requireActivity(), dish.foodstuffList) {
 
         }
-        foodstuffListView.adapter = foodstuffListAdapter
+        binding.foodstuffListView.adapter = foodstuffListAdapter
 
-        confirmButton.setOnClickListener {
+        binding.confirmButton.setOnClickListener {
             val dbDataIdList = FmSQLiteOpenHelper.readDataIdList()
             if (dbDataIdList.contains(dish.id)) {
-                FmSQLiteOpenHelper.updateData(dish.id, Json.stringify(Dish.serializer(), dish))
+                FmSQLiteOpenHelper.updateData(dish.id, Json.encodeToString(Dish.serializer(), dish))
             } else {
-                FmSQLiteOpenHelper.appendData(dish.id, Json.stringify(Dish.serializer(), dish))
+                FmSQLiteOpenHelper.appendData(dish.id, Json.encodeToString(Dish.serializer(), dish))
             }
             findNavController().navigate(R.id.action_confirmDishFragment_to_dishListFragment)
         }

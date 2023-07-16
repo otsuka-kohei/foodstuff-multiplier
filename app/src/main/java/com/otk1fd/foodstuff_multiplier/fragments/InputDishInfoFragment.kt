@@ -7,57 +7,74 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.otk1fd.foodstuff_multiplier.Dish
 
 import com.otk1fd.foodstuff_multiplier.R
-import kotlinx.android.synthetic.main.fragment_input_dish_info.*
+import com.otk1fd.foodstuff_multiplier.databinding.FragmentDishListBinding
+import com.otk1fd.foodstuff_multiplier.databinding.FragmentInputDishInfoBinding
+import kotlin.math.abs
 
 class InputDishInfoFragment : Fragment() {
 
     private val args: InputDishInfoFragmentArgs by navArgs()
 
+    private lateinit var binding: FragmentInputDishInfoBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_input_dish_info, container, false)
+        binding = FragmentInputDishInfoBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
-        args.dish?.let {
-            dishNameEditText.setText(it.name)
-            if (it.serves > 0) {
-                servesEditText.setText(it.serves.toString())
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (args.dish.name.isNotEmpty()) {
+            binding.dishNameEditText.setText(args.dish.name)
         }
 
-        dishNameNextButton.setOnClickListener {
-            val dishName = dishNameEditText.text.toString()
+        if (args.dish.serves != -1) {
+            binding.servesEditText.setText(args.dish.serves.toString())
+        }
 
-            var serves: Int
-            try {
-                val servesText: String = servesEditText.text.toString()
-                serves =
-                    if (servesText.isNotEmpty()) servesEditText.text.toString().toInt() else 0
-                serves = Math.abs(serves)
-            } catch (e: NumberFormatException) {
-                serves = 0
-            }
+        binding.dishNameNextButton.setOnClickListener {
+            val dishName = binding.dishNameEditText.text.toString()
 
             if (dishName.isEmpty()) {
-                dishNameEditText.error = "料理名を入力してください。"
-            } else {
-                val action =
-                    InputDishInfoFragmentDirections.actionInputDishInfoFragmentToInputFoodstuffFragment(
-                        dishName,
-                        args.dish,
-                        args.id,
-                        serves
-                    )
-                findNavController().navigate(action)
+                binding.dishNameEditText.error = "料理名を入力してください。"
+                return@setOnClickListener
             }
+
+            val serves: Int =
+                try {
+                    val servesText: String = binding.servesEditText.text.toString()
+
+                    val tempServes =
+                        if (servesText.isNotEmpty())
+                            binding.servesEditText.text.toString().toInt()
+                        else
+                            0
+
+                    abs(tempServes)
+                } catch (e: NumberFormatException) {
+                    0
+                }
+
+
+            val action =
+                InputDishInfoFragmentDirections.actionInputDishInfoFragmentToInputFoodstuffFragment(
+                    Dish(
+                        args.dish.id,
+                        dishName,
+                        serves,
+                        args.dish.foodstuffList
+                    )
+                )
+            findNavController().navigate(action)
         }
     }
 }

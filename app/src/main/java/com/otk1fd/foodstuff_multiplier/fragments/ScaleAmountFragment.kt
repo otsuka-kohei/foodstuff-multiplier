@@ -11,8 +11,9 @@ import androidx.navigation.fragment.navArgs
 import com.otk1fd.foodstuff_multiplier.Foodstuff
 
 import com.otk1fd.foodstuff_multiplier.R
+import com.otk1fd.foodstuff_multiplier.databinding.FragmentDishListBinding
+import com.otk1fd.foodstuff_multiplier.databinding.FragmentScaleAmountBinding
 import com.otk1fd.foodstuff_multiplier.listadapter.ScaleAmountListAdapter
-import kotlinx.android.synthetic.main.fragment_scale_amount.*
 
 /**
  * A simple [Fragment] subclass.
@@ -21,34 +22,36 @@ class ScaleAmountFragment : Fragment() {
 
     private val args: ScaleAmountFragmentArgs by navArgs()
 
+    private lateinit var binding: FragmentScaleAmountBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_scale_amount, container, false)
+        binding = FragmentScaleAmountBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        finishButton.setOnClickListener {
+        binding.finishButton.setOnClickListener {
             findNavController().navigate(R.id.action_scaleAmountFragment_to_dishListFragment)
         }
 
         val dish = args.dish
 
-        var foodstuffList: List<Foodstuff>
-        if (dish.serves > 0) {
+        val foodstuffList: List<Foodstuff> = if (dish.serves > 0) {
             val serves = Foodstuff("人数", dish.serves.toFloat(), "人前")
-            foodstuffList = listOf(serves).plus(dish.foodstuffList)
+            listOf(serves).plus(dish.foodstuffList)
         } else {
-            foodstuffList = dish.foodstuffList
+            dish.foodstuffList
         }
 
         val adjustAmountListAdapter =
-            ScaleAmountListAdapter(activity!!, foodstuffList)
-        adjustAmountListView.adapter = adjustAmountListAdapter
+            ScaleAmountListAdapter(requireActivity(), foodstuffList)
+        binding.adjustAmountListView.adapter = adjustAmountListAdapter
     }
 
 

@@ -17,7 +17,7 @@ import com.otk1fd.foodstuff_multiplier.toSimpleString
 class InputFoodstuffListAdapter(
     val activity: Activity,
     val foodstuffList: List<Foodstuff>,
-    val onClickAddFoddstuff: () -> Unit
+    val onClickAddFoodstuff: () -> Unit
 ) :
     BaseAdapter() {
 
@@ -44,7 +44,7 @@ class InputFoodstuffListAdapter(
 
         val addNewStuffTextView: TextView = view.findViewById(R.id.addNewStuffTextView)
         addNewStuffTextView.setOnClickListener {
-            onClickAddFoddstuff()
+            onClickAddFoodstuff()
         }
 
         foodstuffNameEditText.addTextChangedListener(object : TextWatcher {
@@ -99,7 +99,7 @@ class InputFoodstuffListAdapter(
         return foodstuffList.size
     }
 
-    fun getFoodStufItemList(): List<Foodstuff> {
+    fun getFoodstuffItemList(): List<Foodstuff> {
         return mutableFoodstuffList.toList()
     }
 
