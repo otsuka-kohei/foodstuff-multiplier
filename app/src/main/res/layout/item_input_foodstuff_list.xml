@@ -20,7 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="+ 追加"
+            android:text="+ 材料を追加"
             android:textColor="@color/text"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
