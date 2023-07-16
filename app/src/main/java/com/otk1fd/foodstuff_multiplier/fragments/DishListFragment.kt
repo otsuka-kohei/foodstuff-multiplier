@@ -73,7 +73,7 @@ class DishListFragment : Fragment() {
     }
 
     private fun setDishDataToListView() {
-        val dbDataList: List<Pair<Int, String>> = FmSQLiteOpenHelper.readAllData()
+        val dbDataList: List<Pair<Int, String>> = FmSQLiteOpenHelper.readAllData(requireContext())
         dishList = dbDataList.map {
             Json.decodeFromString(Dish.serializer(), it.second)
         }
@@ -92,7 +92,8 @@ class DishListFragment : Fragment() {
     }
 
     private fun getNewDishId(): Int {
-        val idList = FmSQLiteOpenHelper.readDataIdList()
+
+        val idList = FmSQLiteOpenHelper.readDataIdList(requireContext())
         for (newId in 0..Int.MAX_VALUE) {
             if (!idList.contains(newId)) {
                 return newId
@@ -156,8 +157,8 @@ class ConfirmDeleteDishDialog(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
         builder.setMessage("項目「${dish.name}」を削除してもよろしいですか？")
-        builder.setPositiveButton("はい") { dialog, id ->
-            FmSQLiteOpenHelper.deleteData(dish.id)
+        builder.setPositiveButton("はい") { _, _ ->
+            FmSQLiteOpenHelper.deleteData(requireContext(), dish.id)
             afterDeleteFun()
         }
         builder.setNegativeButton("いいえ", null)

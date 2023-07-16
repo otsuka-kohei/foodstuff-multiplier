@@ -47,11 +47,19 @@ class ConfirmDishFragment : Fragment() {
         binding.foodstuffListView.adapter = foodstuffListAdapter
 
         binding.confirmButton.setOnClickListener {
-            val dbDataIdList = FmSQLiteOpenHelper.readDataIdList()
+            val dbDataIdList = FmSQLiteOpenHelper.readDataIdList(requireContext())
             if (dbDataIdList.contains(dish.id)) {
-                FmSQLiteOpenHelper.updateData(dish.id, Json.encodeToString(Dish.serializer(), dish))
+                FmSQLiteOpenHelper.updateData(
+                    requireContext(),
+                    dish.id,
+                    Json.encodeToString(Dish.serializer(), dish)
+                )
             } else {
-                FmSQLiteOpenHelper.appendData(dish.id, Json.encodeToString(Dish.serializer(), dish))
+                FmSQLiteOpenHelper.appendData(
+                    requireContext(),
+                    dish.id,
+                    Json.encodeToString(Dish.serializer(), dish)
+                )
             }
             findNavController().navigate(R.id.action_confirmDishFragment_to_dishListFragment)
         }

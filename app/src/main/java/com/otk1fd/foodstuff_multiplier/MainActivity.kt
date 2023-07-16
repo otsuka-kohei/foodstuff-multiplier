@@ -24,15 +24,8 @@ class MainActivity : AppCompatActivity() {
         val navigationController = navHostFragment.navController
         val appBarConfiguration = AppBarConfiguration(navigationController.graph)
         setupActionBarWithNavController(navigationController, appBarConfiguration)
-
-        FmSQLiteOpenHelper.setup(this)
     }
 
-    override fun onSupportNavigateUp() = findNavController(R.id.navigation_host_fragment).navigateUp()
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        FmSQLiteOpenHelper.teardown()
-    }
+    override fun onSupportNavigateUp() =
+        findNavController(R.id.navigation_host_fragment).navigateUp()
 }
